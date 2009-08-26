@@ -142,7 +142,8 @@ module UDDFactor
 		retVal += annuity_certain_combined(SEGMENT_THREE,[certain,TABLE_END].min,seg3) 
 	end
 	return retVal
-  end  
+  end 
+  module_function :annuity_certain 
 
   def calculate_present_value(immAge,defAge,seg1,seg2,seg3,certain,temp)
     retVal = 0.0
@@ -206,10 +207,12 @@ module UDDFactor
 	int_rate = sanitize_interest(int_rate)
 	return 1.0 / (1.0 + int_rate)
   end
+  module_function :interest_discount
   
   def yearly_discount(int_disc)
 	return 12.0 * (1.0 - (int_disc ** (1.0/12.0)))
   end
+  module_function :yearly_discount
   
   def annuity_certain_combined(*args)
 	retVal = nil
@@ -232,6 +235,7 @@ module UDDFactor
 	
 	return retVal
   end
+  module_function :annuity_certain_combined
   
   def calculate_qx(age)
     retVal = 1.0
@@ -255,6 +259,7 @@ module UDDFactor
     return  ((age * 12.0).round / 12.0)
   end
   module_function :sanitize_age
+  
   def sanitize_interest(int)
 	retVal = 0.0
 	if int < 1.0
