@@ -1,13 +1,15 @@
 UDDFactor
 =========
 
-Introduction goes here.
+UDDFactor is a quick and dirty function library for calculating factors based on the linear interpolation of people alive between whole ages.  It takes advantage of the three PPA mandated segment rates.
+
+Currently, it only supports PPA2009.
 
 
 Example
 =======
 
-Example goes here.
+UDDFactor.calculate_present_value(immediateAge,retirementAge,segment1,segment2,segment3,certainPeriod,tempPeriod)
 
 
 Copyright (c) 2009 [name of plugin creator], released under the MIT license
