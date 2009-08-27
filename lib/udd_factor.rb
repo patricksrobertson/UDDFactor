@@ -145,7 +145,7 @@ module UDDFactor
   end 
   module_function :annuity_certain 
 
-  def calculate_present_value(immAge,defAge,seg1,seg2,seg3,certain,temp,rounding=12.0)
+  def calculate_present_value(immAge,defAge,seg1,seg2,seg3,certain=0.0,temp=0.0,rounding=12.0)
     retVal = 0.0
 	age = sanitize_age(immAge)
 	dAge = sanitize_age(defAge)
@@ -196,7 +196,13 @@ module UDDFactor
 			if age.truncate == age
 				dX = (lX * calculate_qx(age)) / 12.0
 			end
-			mortalityDiscount = lX / lxZero
+			if nil != certain
+				if age >= (dAge + sanitize_age(certain))
+					mortalityDiscount = lX / lxZero
+				end
+			else
+				mortalityDiscount = lX / lxZero
+			end
 		end
 	end
     return round_factor(retVal,rounding)
