@@ -1,4 +1,5 @@
-module Mortality
+module MortalityTable
+
   PPA2009 = [
 	#age		q
 	[0.0,		0],
@@ -122,5 +123,10 @@ module Mortality
 	[118.0,	0.400000],
 	[119.0,	0.400000],
 	[120.0,	1.000000]
-  ]    
+  ]
+  
+  def validate_mortality(inMortality)
+  
+  end
+  module_function :validate_mortality
 end

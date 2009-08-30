@@ -24,4 +24,38 @@ module GenFactor
 	return (factor * (10.0**sigFigs)).round / (10.0**sigFigs)
   end
   module_function :round_factor
+  
+  def validate_float(inFloat) 
+	returnValue = []
+	if nil == inFloat
+		returnValue << "cannot be null "
+	else
+		begin 
+			Float(inFloat)
+			returnValue = nil 
+		rescue Exception => err 
+			returnValue = " #{err.message   }" 
+		end 
+	end
+	return returnValue
+  end   
+  module_function :validate_float
+  
+  def set_default(inVariable,default)
+	returnValue = inVariable
+	if nil == inVariable
+		returnValue = default
+	else	
+		if (inVariable.class == Object::String || Object::Array)
+			if inVariable.empty?
+				returnValue = default
+			end
+		elsif inVariable.class == Object::Float
+			if nil == inVariable
+				returnValue = default
+			end
+		end
+	end
+	return returnValue
+  end
 end
