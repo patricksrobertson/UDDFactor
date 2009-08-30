@@ -7,7 +7,6 @@ module GenFactor
   def sanitize_age(age)
     return  ((age * 12.0).round / 12.0)
   end
-  module_function :sanitize_age
   
   def sanitize_interest(int)
 	retVal = 0.0
@@ -18,12 +17,10 @@ module GenFactor
 	end
 	return retVal
   end
-  module_function :sanitize_interest
   
   def round_factor(factor,sigFigs)
 	return (factor * (10.0**sigFigs)).round / (10.0**sigFigs)
   end
-  module_function :round_factor
   
   def validate_float(inFloat) 
 	returnValue = []
@@ -39,7 +36,6 @@ module GenFactor
 	end
 	return returnValue
   end   
-  module_function :validate_float
   
   def set_default(inVariable,default)
 	returnValue = inVariable

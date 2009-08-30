@@ -90,37 +90,37 @@ include MortalityTable
 	jointCalculation = 0.0
 	
 	#set default blank input items
-	immediateAge = set_default(immediateAge,commencementAge)
-	spAge = set_default(spAge,0.0)
-	mortality = set_default(mortality,MortalityTable::PPA2009)
-	intSegmentB = set_default(intSegmentB,intSegmentA)
-	intSegmentC = set_default(intSegmentC,intSegmentA)
-	certainPeriod = set_default(certainPeriod,0.0)
-	tempPeriod = set_default(tempPeriod,0.0)
-	rounding = set_default(rounding,12.0)
+	immediateAge = GenFactor::set_default(immediateAge,commencementAge)
+	spAge = GenFactor::set_default(spAge,0.0)
+	mortality = GenFactor::set_default(mortality,MortalityTable::PPA2009)
+	intSegmentB = GenFactor::set_default(intSegmentB,intSegmentA)
+	intSegmentC = GenFactor::set_default(intSegmentC,intSegmentA)
+	certainPeriod = GenFactor::set_default(certainPeriod,0.0)
+	tempPeriod = GenFactor::set_default(tempPeriod,0.0)
+	rounding = GenFactor::set_default(rounding,12.0)
 	
 	#check to make sure we can do the calculation first
-	validate_float(immediateAge) != nil ?  errors << "Immediate Age: " + validate_float(immediateAge) : 
-	validate_float(commencementAge) != nil ? errors << "Commencement Age: " + validate_float(commencementAge) :
-	validate_float(intSegmentA) != nil ? errors << "Interest Segment A: " + validate_float(intSegmentA) :
-	validate_float(spAge) != nil ? errors << "Spousal Age: " + validate_float(spAge) :
+	GenFactor::validate_float(immediateAge) != nil ?  errors << "Immediate Age: " + GenFactor::validate_float(immediateAge) : 
+	GenFactor::validate_float(commencementAge) != nil ? errors << "Commencement Age: " + GenFactor::validate_float(commencementAge) :
+	GenFactor::validate_float(intSegmentA) != nil ? errors << "Interest Segment A: " + GenFactor::validate_float(intSegmentA) :
+	GenFactor::validate_float(spAge) != nil ? errors << "Spousal Age: " + GenFactor::validate_float(spAge) :
 	#errors << validate_mortality(mortality) #not implemented yet
-	validate_float(intSegmentB) != nil ? errors << "Interest Segment B: " + validate_float(intSegmentB) :
-	validate_float(intSegmentC) != nil ? errors << "Interest Segment C: " + validate_float(intSegmentC) :
-	validate_float(certainPeriod) != nil ? errors << "Certain Period: " + validate_float(certainPeriod) : 
-	validate_float(tempPeriod) != nil ? errors << "Temporary Period: " + validate_float(tempPeriod) : 
-	validate_float(rounding) != nil ? errors << "Rounding: " + validate_float(rounding) : 
+	GenFactor::validate_float(intSegmentB) != nil ? errors << "Interest Segment B: " + GenFactor::validate_float(intSegmentB) :
+	GenFactor::validate_float(intSegmentC) != nil ? errors << "Interest Segment C: " + GenFactor::validate_float(intSegmentC) :
+	GenFactor::validate_float(certainPeriod) != nil ? errors << "Certain Period: " + GenFactor::validate_float(certainPeriod) : 
+	GenFactor::validate_float(tempPeriod) != nil ? errors << "Temporary Period: " + GenFactor::validate_float(tempPeriod) : 
+	GenFactor::validate_float(rounding) != nil ? errors << "Rounding: " + GenFactor::validate_float(rounding) : 
 
 	if errors.empty?
 		#agjust ages/periods to 1/12th of a year, make sure interest rates are grrrrreat!
-		immediateAge = sanitize_age(Float(immediateAge))
-		commencementAge = sanitize_age(Float(commencementAge))
-		spAge = sanitize_age(Float(spAge))
-		intSegmentA = sanitize_interest(Float(intSegmentA))
-		intSegmentB = sanitize_interest(Float(intSegmentB))
-		intSegmentC = sanitize_interest(Float(intSegmentC))
-		certainPeriod = sanitize_age(Float(certainPeriod))
-		tempPeriod = sanitize_age(Float(tempPeriod))
+		immediateAge = GenFactor::sanitize_age(Float(immediateAge))
+		commencementAge = GenFactor::sanitize_age(Float(commencementAge))
+		spAge = GenFactor::sanitize_age(Float(spAge))
+		intSegmentA = GenFactor::sanitize_interest(Float(intSegmentA))
+		intSegmentB = GenFactor::sanitize_interest(Float(intSegmentB))
+		intSegmentC = GenFactor::sanitize_interest(Float(intSegmentC))
+		certainPeriod = GenFactor::sanitize_age(Float(certainPeriod))
+		tempPeriod = GenFactor::sanitize_age(Float(tempPeriod))
 		rounding = Float(rounding)
 	end
 	if errors.empty?
