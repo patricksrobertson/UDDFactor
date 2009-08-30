@@ -35,6 +35,11 @@ include MortalityTable
 			else
 				payment = (1.0/12.0)
 			end
+			if temp > 0.0
+				if age > (temp + dAge)
+					payment = 0.0
+				end
+			end
 			unit_payment(mortalityDiscount,interestRate,time,payment)
 			retVal += unit_payment(mortalityDiscount,interestRate,time,payment)
 			time += 1.0
