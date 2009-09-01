@@ -36,7 +36,7 @@ include MortalityTable
 				payment = (1.0/12.0)
 			end
 			if temp > 0.0
-				if age > (temp + dAge)
+				if age >= (temp + dAge)
 					payment = 0.0
 				end
 			end
@@ -51,7 +51,7 @@ include MortalityTable
 				dX = (lX * calculate_qx(age)) / 12.0
 			end
 			if nil != certain
-				if age >= (dAge + certain)
+				if age >= (dAge + certain) || age <= dAge
 					mortalityDiscount = lX / lxZero
 				end
 			else

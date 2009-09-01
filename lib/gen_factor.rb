@@ -42,12 +42,8 @@ module GenFactor
 	if nil == inVariable
 		returnValue = default
 	else	
-		if (inVariable.class == Object::String || Object::Array)
+		begin
 			if inVariable.empty?
-				returnValue = default
-			end
-		elsif inVariable.class == Object::Float
-			if nil == inVariable
 				returnValue = default
 			end
 		end
