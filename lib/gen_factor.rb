@@ -50,4 +50,29 @@ module GenFactor
 	end
 	return returnValue
   end
+  
+  def sanitize_js_type(inJSType)
+	inJSType = inJSType.truncate
+	if (inJSType == 0.0) || (inJSType == 1.0) || (inJSType == 2.0) || (inJSType == 3.0) || (inJSType == 4.0)
+		inJSType
+	else
+		"Error: Invalid Joint Annuity Type"
+	end
+  end
+  def sanitize_js_pct(inJSPct)
+	if inJSPct < 0.0
+		inJSPct = 0.0
+	end
+	if inJSPct > 1.0 && inJSPct < 2.0
+		inJSPct = 1.0
+	end
+	if inJSPct > 100.0
+		inJSPct = 100.0
+	end
+	if inJSPct > 1.0
+		inJSPct / 100.0
+	else
+		inJSPct
+	end
+  end
 end
