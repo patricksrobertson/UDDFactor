@@ -2,22 +2,35 @@ module UDDFactor
 include GenFactor
 include MortalityTable
 
-  def calculate_present_value(immAge,defAge,seg1,seg2,seg3,certain,temp,rounding)
+  def calculate_present_value(immAge,defAge,spouseAge,seg1,seg2,seg3,certain,temp,rounding)
     retVal = 0.0
+	spousePV = 0.0
+	jointPV = 0.0
 	time = 0.0
 	payment = 0.0
 	age = immAge
 	dAge = defAge
 	lxZero = LX_ZERO
+	lxZeroSpouse = LX_ZERO
+	sAge = spouseAge
+	jointCalc = 0.0
+	sAge > 0.0 ? jointCalc = 1.0 : jointCalc = 0.0
 	
 	mortalityDiscount = 1.0
+	mortalityDiscountSpouse = 1.0
+	mortalityDiscountJoint = 1.0
+	
 	lX = lxZero
-	dX = (lX * calculate_qx(age)) / 12.0
-	if age != age.truncate
-		monthsProrate = ((age - age.truncate) * 12.0).round
-		lX = lX - (dX * monthsProrate)
-		lxZero = lX
-	end
+	lXSpouse = lxZeroSpouse
+	
+	dX = calculate_dx(0.0,lX,age.truncate)
+	dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate)
+	
+	lX = calculate_initial_lx(lX,dX,age)
+	lxZero = lX
+	
+	lXSpouse = calculate_initial_lx(lXSpouse,dXSpouse,sAge)
+	lxZeroSpouse = lX
 	
 	if 0.0 == lX
 		retVal = 0.0 #everyone is already dead yo.
@@ -40,22 +53,30 @@ include MortalityTable
 					payment = 0.0
 				end
 			end
-			unit_payment(mortalityDiscount,interestRate,time,payment)
 			retVal += unit_payment(mortalityDiscount,interestRate,time,payment)
-			time += 1.0
-			age = age + (1.0/12.0)
-			age = sanitize_age(age)
-			#only need to call this for a new whole age
-			lX = lX - dX
-			if age.truncate == age
-				dX = (lX * calculate_qx(age)) / 12.0
+			if jointCalc > 0.0 && lXSpouse > 0.0
+				spousePV += unit_payment(mortalityDiscountSpouse,interestRate,time,payment)
+				jointPV += unit_payment(mortalityDiscountJoint,interestRate,time,payment)
+				sAge = add_month(sAge)				
 			end
+			time += 1.0
+			age = add_month(age)
+			
+			lX = lX - dX
+			lXSpouse = lXSpouse - dXSpouse
+			
+			dX = calculate_dx(dX,lX,age)
+			dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge)
 			if nil != certain
 				if age >= (dAge + certain) || age <= dAge
-					mortalityDiscount = lX / lxZero
+					mortalityDiscount = calculate_discount(lX, lxZero)
+					mortalityDiscountSpouse = calculate_discount(lXSpouse,lxZeroSpouse)
+					mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
 				end
 			else
-				mortalityDiscount = lX / lxZero
+				mortalityDiscount = calculate_discount(lX, lxZero)
+				mortalityDiscountSpouse = calculate_discount(lXSpouse,lxZeroSpouse)
+				mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
 			end
 		end
 	end
@@ -134,7 +155,7 @@ include MortalityTable
 	end
 	if errors.empty?
 		#return [immediateAge,commencementAge, spAge, intSegmentA, intSegmentB, intSegmentC, certainPeriod,tempPeriod,rounding]
-		return calculate_present_value(immediateAge,commencementAge,intSegmentA,
+		return calculate_present_value(immediateAge,commencementAge,spAge,intSegmentA,
 									   intSegmentB,intSegmentC,certainPeriod,
 									   tempPeriod,rounding)
 	else
@@ -142,6 +163,31 @@ include MortalityTable
 	end
   end
   module_function :generate_factor
+  
+  def calculate_dx(inDX,inLX, age)
+	returnValue = inDX
+	if age == age.truncate
+		returnValue = (inLX * calculate_qx(age)) / 12.0
+	end
+	return returnValue
+  end
+  def calculate_initial_lx(inLX,inDX,age)
+	returnValue = inLX
+	
+	if age != age.truncate
+		monthsProrate = ((age - age.truncate) * 12.0).round
+		returnValue = inLX - (inDX * monthsProrate)
+	end
+	
+	return returnValue
+  end
+  def calculate_discount(inLX,inLXZero)
+	return Float(inLX) / Float(inLXZero)
+  end
+  
+  def add_month(age)
+	return GenFactor::sanitize_age((age + (1.0/12.0)))
+  end
 end
 	
 	
