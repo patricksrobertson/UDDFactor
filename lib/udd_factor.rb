@@ -109,9 +109,7 @@ include MortalityTable
 					 jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
 					 intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
 					 tempPeriod=0.0,rounding=12.0)
-	errors = []
-	immediateCalculation = 0.0
-	jointCalculation = 0.0
+	errors = nil
 	
 	#set default blank input items
 	immediateAge = GenFactor::set_default(immediateAge,commencementAge)
@@ -123,7 +121,40 @@ include MortalityTable
 	intSegmentC = GenFactor::set_default(intSegmentC,intSegmentA)
 	certainPeriod = GenFactor::set_default(certainPeriod,0.0)
 	tempPeriod = GenFactor::set_default(tempPeriod,0.0)
-	rounding = GenFactor::set_default(rounding,12.0)
+	rounding = GenFactor::set_default(rounding,12.0)	
+	
+	errors = check_factor(immediateAge,commencementAge,spAge,jsType,jsPct,mortality,intSegmentA,
+						  intSegmentB,intSegmentC,certainPeriod,tempPeriod,rounding)
+	if errors == true
+		#agjust ages/periods to 1/12th of a year, make sure interest rates are grrrrreat!
+		immediateAge = GenFactor::sanitize_age(Float(immediateAge))
+		commencementAge = GenFactor::sanitize_age(Float(commencementAge))
+		spAge = GenFactor::sanitize_age(Float(spAge))
+		jsType = GenFactor::sanitize_js_type(Float(jsType))
+		jsPct = GenFactor::sanitize_js_pct(Float(jsPct))
+		intSegmentA = GenFactor::sanitize_interest(Float(intSegmentA))
+		intSegmentB = GenFactor::sanitize_interest(Float(intSegmentB))
+		intSegmentC = GenFactor::sanitize_interest(Float(intSegmentC))
+		certainPeriod = GenFactor::sanitize_age(Float(certainPeriod))
+		tempPeriod = GenFactor::sanitize_age(Float(tempPeriod))
+		rounding = Float(rounding)
+	
+		return calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,
+									   intSegmentA,intSegmentB,intSegmentC,certainPeriod,
+									   tempPeriod,rounding)
+	else
+		return errors
+	end
+  end
+  module_function :generate_factor
+  
+  def check_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
+					 jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
+					 intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
+					 tempPeriod=0.0,rounding=12.0)
+	errors = []
+	immediateCalculation = 0.0
+	jointCalculation = 0.0
 	
 	#check to make sure we can do the calculation first
 	GenFactor::validate_float(immediateAge) != nil ?  errors << "Immediate Age: " + GenFactor::validate_float(immediateAge) : 
@@ -163,15 +194,12 @@ include MortalityTable
 		end
 	end
 	if errors.empty?
-		#return [immediateAge,commencementAge, spAge, intSegmentA, intSegmentB, intSegmentC, certainPeriod,tempPeriod,rounding]
-		return calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,
-									   intSegmentA,intSegmentB,intSegmentC,certainPeriod,
-									   tempPeriod,rounding)
+		return true
 	else
 		return errors
 	end
   end
-  module_function :generate_factor
+  module_function :check_factor  
   
   def calculate_dx(inDX,inLX, age)
 	returnValue = inDX
