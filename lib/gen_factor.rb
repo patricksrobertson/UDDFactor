@@ -46,6 +46,8 @@ module GenFactor
 			if inVariable.empty?
 				returnValue = default
 			end
+		rescue
+			returnValue = inVariable
 		end
 	end
 	return returnValue
