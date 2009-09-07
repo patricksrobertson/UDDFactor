@@ -127,6 +127,5 @@ module MortalityTable
   
   def validate_mortality(inMortality)
   
-  end
-  module_function :validate_mortality
-end
+  end #end validate_mortality
+end #end module MortalityTable
