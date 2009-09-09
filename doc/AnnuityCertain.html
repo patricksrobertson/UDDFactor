@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="custom.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="syntax_highlight.css" type="text/css" charset="utf-8" />
+
+    <script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="app.js" type="text/javascript" charset="utf-8"></script>
+    <title>Module: AnnuityCertain</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="section module AnnuityCertain">
+  <h1 class="title">Module: AnnuityCertain</h1>
+  <div class="section constants">
+  
+</div>  <div class="section visibilitygroup public">
+    <h1>Public Visibility</h1>
+      <div class="section methodsummary instance public">
+    <h1>Public Instance Method Summary</h1>
+<table class="summary">
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#annuity_certain-instance_method" title="#annuity_certain">#annuity_certain</a></span><span class='args'>(certain, seg1, seg2, seg3, round = 12.0)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns an annuity certain over all three interest segments.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#annuity_certain_combined-instance_method" title="#annuity_certain_combined">#annuity_certain_combined</a></span><span class='args'>(*args)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+Calculates either a simple segment, or one of three segments of an annuity
+certain factor.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#interest_discount-instance_method" title="#interest_discount">#interest_discount</a></span><span class='args'>(int_rate)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns the interest discount.
+</p>
+
+        
+      </td>
+    </tr>
+  
+    <tr>
+      <th class="signature">
+        
+          <span class='overload'>
+            <span class='name'><a href="#yearly_discount-instance_method" title="#yearly_discount">#yearly_discount</a></span><span class='args'>(int_disc)</span>
+            <span class='block'></span>
+          </span>
+        
+        
+      </th>
+      <td class="docstring">
+        <p>
+returns the yearly discount(this is a poor name for it).
+</p>
+
+        
+      </td>
+    </tr>
+  
+</table>
+
+  </div>
+<div class="section methoddetails instance public">
+  <h1>Public Instance Method Details</h1>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>annuity_certain</h3>
+</div><div id="annuity_certain-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>annuity_certain</span><span class='args'>(certain, seg1, seg2, seg3, round = 12.0)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns an annuity certain over all three interest segments. When
+calculating a single segment annuity certain factor, either place nil in
+seg2 &amp; seg3 or call <tt><a href="#annuity_certain_combined-instance_method" title="#annuity_certain_combined">#annuity_certain_combined</a></tt> with the certain period
+and interest rate.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="examples">
+  
+    <h3>Example: <small>6 year certain factor with 3 segment interest</small></h3>
+    <div class="docstring">
+      <pre class="code"> <span class='string val'>&quot;annuity_certain(6.0,5.44,5.22,5.69)&quot;</span>
+</pre>
+    </div>
+  
+</div>
+<div class="since">
+  <h3>Since:</h3>
+  <dl>
+  
+    <dt>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+version 1.0.0
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 20</span>
+
+<span class='def def kw'>def</span> <span class='annuity_certain identifier id'>annuity_certain</span><span class='lparen token'>(</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='seg1 identifier id'>seg1</span><span class='comma token'>,</span><span class='seg2 identifier id'>seg2</span><span class='comma token'>,</span><span class='seg3 identifier id'>seg3</span><span class='comma token'>,</span><span class='round identifier id'>round</span><span class='assign token'>=</span><span class='float val'>12.0</span><span class='rparen token'>)</span>
+  <span class='retVal identifier id'>retVal</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
+  <span class='retVal identifier id'>retVal</span> <span class='assign token'>=</span> <span class='annuity_certain_combined identifier id'>annuity_certain_combined</span><span class='lparen token'>(</span><span class='lbrack token'>[</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_TWO constant id'>SEGMENT_TWO</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='min identifier id'>min</span><span class='comma token'>,</span><span class='seg1 identifier id'>seg1</span><span class='rparen token'>)</span>
+  
+  <span class='if if kw'>if</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_TWO constant id'>SEGMENT_TWO</span> <span class='lt op'>&lt;</span> <span class='certain identifier id'>certain</span> 
+    <span class='nil nil kw'>nil</span> <span class='eq op'>==</span> <span class='seg2 identifier id'>seg2</span> <span class='integer val'>? </span><span class='seg2 identifier id'>seg2</span> <span class='assign token'>=</span> <span class='seg1 identifier id'>seg1</span> <span class='colon op'>:</span> <span class='seg2 identifier id'>seg2</span> <span class='assign token'>=</span> <span class='seg2 identifier id'>seg2</span>
+    <span class='retVal identifier id'>retVal</span> <span class='opasgn op'>+=</span> <span class='annuity_certain_combined identifier id'>annuity_certain_combined</span><span class='lparen token'>(</span><span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_TWO constant id'>SEGMENT_TWO</span><span class='comma token'>,</span><span class='lbrack token'>[</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_THREE constant id'>SEGMENT_THREE</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='min identifier id'>min</span><span class='comma token'>,</span><span class='seg2 identifier id'>seg2</span><span class='rparen token'>)</span> 
+  <span class='end end kw'>end</span>
+  
+  <span class='if if kw'>if</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_THREE constant id'>SEGMENT_THREE</span> <span class='lt op'>&lt;</span> <span class='certain identifier id'>certain</span> 
+    <span class='nil nil kw'>nil</span> <span class='eq op'>==</span> <span class='seg3 identifier id'>seg3</span> <span class='integer val'>? </span><span class='seg3 identifier id'>seg3</span> <span class='assign token'>=</span> <span class='seg1 identifier id'>seg1</span> <span class='colon op'>:</span> <span class='seg3 identifier id'>seg3</span> <span class='assign token'>=</span> <span class='seg3 identifier id'>seg3</span>
+    <span class='retVal identifier id'>retVal</span> <span class='opasgn op'>+=</span> <span class='annuity_certain_combined identifier id'>annuity_certain_combined</span><span class='lparen token'>(</span><span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='SEGMENT_THREE constant id'>SEGMENT_THREE</span><span class='comma token'>,</span><span class='lbrack token'>[</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='TABLE_END constant id'>TABLE_END</span><span class='rbrack token'>]</span><span class='dot token'>.</span><span class='min identifier id'>min</span><span class='comma token'>,</span><span class='seg3 identifier id'>seg3</span><span class='rparen token'>)</span> 
+  <span class='end end kw'>end</span>
+  
+  <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='round_factor identifier id'>round_factor</span><span class='lparen token'>(</span><span class='retVal identifier id'>retVal</span><span class='comma token'>,</span><span class='round identifier id'>round</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>annuity_certain_combined</h3>
+</div><div id="annuity_certain_combined-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>annuity_certain_combined</span><span class='args'>(*args)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+Calculates either a simple segment, or one of three segments of an annuity
+certain factor.
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="examples">
+  
+    <h3>Examples</h3>
+    
+    <dl>
+      <dt>simple annuity certain</dt>
+      <dd class="docstring">
+        <pre class="code"><span class='string val'>&quot;annuity_certain_combined(6.0,5.44)&quot;</span>
+</pre>
+      </dd>
+    </dl>
+    
+    <dl>
+      <dt>2nd annuity certain segment</dt>
+      <dd class="docstring">
+        <pre class="code"><span class='string val'>&quot;annuity_certain_combined(5.0,20.0,5.24)&quot;</span>
+</pre>
+      </dd>
+    </dl>
+    
+  
+</div>
+<div class="param">
+  <h3>Parameters:</h3>
+  <dl>
+  
+    
+      <dt>
+        <span class='type'>[<tt>Array</tt>]</span>
+        <span class='name'>args</span>
+        
+      </dt>
+      <dd>
+        <span class='desc'><ul>
+<li>If there are 2 parameters, calculate a simple segment annuity certain. If
+there are 3, calculate that segment given min and max years.
+
+</li>
+</ul>
+</span>
+      </dd>
+    
+  
+  </dl>
+</div><div class="since">
+  <h3>Since:</h3>
+  <dl>
+  
+    <dt>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+version 1.0.0
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 69</span>
+
+<span class='def def kw'>def</span> <span class='annuity_certain_combined identifier id'>annuity_certain_combined</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
+  <span class='retVal identifier id'>retVal</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+  <span class='case case kw'>case</span> <span class='args identifier id'>args</span><span class='dot token'>.</span><span class='size identifier id'>size</span>
+    <span class='when when kw'>when</span> <span class='integer val'>2</span>
+      <span class='certain identifier id'>certain</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+      <span class='interest identifier id'>interest</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+  
+      <span class='int_disc identifier id'>int_disc</span> <span class='assign token'>=</span> <span class='interest_discount identifier id'>interest_discount</span><span class='lparen token'>(</span><span class='interest identifier id'>interest</span><span class='rparen token'>)</span>
+      <span class='year_disc identifier id'>year_disc</span> <span class='assign token'>=</span> <span class='yearly_discount identifier id'>yearly_discount</span><span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span><span class='rparen token'>)</span>
+      
+      <span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span> <span class='pow op'>**</span> <span class='certain identifier id'>certain</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='year_disc identifier id'>year_disc</span>   
+    <span class='when when kw'>when</span> <span class='integer val'>3</span>
+      <span class='min_certain identifier id'>min_certain</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
+      <span class='max_certain identifier id'>max_certain</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
+      <span class='interest identifier id'>interest</span> <span class='assign token'>=</span> <span class='args identifier id'>args</span><span class='lbrack token'>[</span><span class='integer val'>2</span><span class='rbrack token'>]</span>
+  
+      <span class='int_disc identifier id'>int_disc</span> <span class='assign token'>=</span> <span class='interest_discount identifier id'>interest_discount</span><span class='lparen token'>(</span><span class='interest identifier id'>interest</span><span class='rparen token'>)</span>
+      <span class='year_disc identifier id'>year_disc</span> <span class='assign token'>=</span> <span class='yearly_discount identifier id'>yearly_discount</span><span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span><span class='rparen token'>)</span>
+      
+      <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span> <span class='pow op'>**</span> <span class='min_certain identifier id'>min_certain</span><span class='rparen token'>)</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span> <span class='pow op'>**</span> <span class='max_certain identifier id'>max_certain</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='year_disc identifier id'>year_disc</span>   
+  <span class='else else kw'>else</span>
+      <span class='nil nil kw'>nil</span>
+  <span class='end end kw'>end</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>interest_discount</h3>
+</div><div id="interest_discount-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>interest_discount</span><span class='args'>(int_rate)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns the interest discount
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="since">
+  <h3>Since:</h3>
+  <dl>
+  
+    <dt>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+version 1.0.0
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+42
+43
+44
+45</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 42</span>
+
+<span class='def def kw'>def</span> <span class='interest_discount identifier id'>interest_discount</span><span class='lparen token'>(</span><span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
+  <span class='int_rate identifier id'>int_rate</span> <span class='assign token'>=</span> <span class='sanitize_interest identifier id'>sanitize_interest</span><span class='lparen token'>(</span><span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
+  <span class='float val'>1.0</span> <span class='div op'>/</span> <span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='plus op'>+</span> <span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+    <div class="method">
+      <div class="method_header">
+  <h3>yearly_discount</h3>
+</div><div id="yearly_discount-instance_method" class="section method">
+  <div class="details_title">
+    <div class='section methodsignature'>
+    <tt class='def'>
+      <span class='visibility'>public</span>
+      <span class='return_types'></span>
+      <span class='name'>yearly_discount</span><span class='args'>(int_disc)</span>
+      <span class='block'></span>
+    </tt>
+  </div>
+
+</div><div class="section docstring">
+  <p>
+returns the yearly discount(this is a poor name for it)
+</p>
+
+</div><div class="section tags">
+  <h2>Meta Tags</h2>
+  <div class="since">
+  <h3>Since:</h3>
+  <dl>
+  
+    <dt>
+      
+      
+      
+    </dt>
+    <dd>
+      <span class='desc'><p>
+version 1.0.0
+</p>
+</span>
+    </dd>
+  
+  </dl>
+</div>
+
+</div><div class="section source">
+  <span>[<a class="source_link" href="#">View source</a>]</span>
+  <div class="source_code">
+    <table>
+      <tr>
+        <td>
+          <pre class="lines">
+
+
+51
+52
+53</pre>
+        </td>
+        <td>
+          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 51</span>
+
+<span class='def def kw'>def</span> <span class='yearly_discount identifier id'>yearly_discount</span><span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span><span class='rparen token'>)</span>
+  <span class='float val'>12.0</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span> <span class='pow op'>**</span> <span class='lparen token'>(</span><span class='float val'>1.0</span><span class='div op'>/</span><span class='float val'>12.0</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
+<span class='end end kw'>end</span>
+</pre>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</div>
+    </div>
+  
+</div>
+  </div>
+
+</div>
+    </div>
+    <div id="yard_info">
+  Generated on Wednesday, September 09 2009 at 07:23:53 PM by 
+  <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
+  0.2.3.5 (ruby-1.8.6).
+</div>
+
+  </body>
+</html>
