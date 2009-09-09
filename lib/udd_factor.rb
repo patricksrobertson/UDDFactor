@@ -3,22 +3,14 @@ include GenFactor
 include MortalityTable
  
   def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,seg1,seg2,seg3,certain,temp,rounding)
-    returnValue = 0.0
-    singlePV = 0.0
-    spousePV = 0.0
-    jointPV = 0.0
-    time = 0.0
-    payment = 0.0
+    returnValue, singlePV, spousePV, jointPV, time, payment = 0.0
     age = immAge
     dAge = defAge
-    lxZero = LX_ZERO
-    lxZeroSpouse = LX_ZERO
+    lxZero, lxZeroSpouse = LX_ZERO
     sAge = spouseAge
     jointCalc = js_type
  
-    mortalityDiscount = 1.0
-    mortalityDiscountSpouse = 1.0
-    mortalityDiscountJoint = 1.0
+    mortalityDiscount, mortalityDiscountSpouse, mortalityDiscountJoint = 1.0
  
     lX = lxZero
     lXSpouse = lxZeroSpouse
@@ -43,22 +35,26 @@ include MortalityTable
         else
           interestRate = seg3
         end
+        
         if age < dAge
           payment = 0.0
         else
           payment = (1.0/12.0)
         end
+        
         if temp > 0.0
           if age >= (temp + dAge)
             payment = 0.0
           end
         end
+        
         singlePV += unit_payment(mortalityDiscount,interestRate,time,payment)
-        if jointCalc > 0.0 && lXSpouse > 0.0
+        if jointCalc > 0.0 and lXSpouse > 0.0
           spousePV += unit_payment(mortalityDiscountSpouse,interestRate,time,payment)
           jointPV += unit_payment(mortalityDiscountJoint,interestRate,time,payment)
           sAge = add_month(sAge)
         end
+        
         time += 1.0
         age = add_month(age)
  
@@ -78,29 +74,29 @@ include MortalityTable
           mortalityDiscountSpouse = calculate_discount(lXSpouse,lxZeroSpouse)
           mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
         end
-      end
+        
+      end #end while 0.0 < lX
     end #end if lx = 0.0
-    #return round_factor(singlePV,rounding)
+    
     returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
-    return round_factor(returnValue,rounding)
+    
+    round_factor(returnValue,rounding)
  
   end #end method calculate_present_value
   module_function :calculate_present_value
   
   def calculate_qx(age)
-    retVal = 1.0
     age = age.truncate
     max_age = PPA2009[-1][0]
     if age > max_age
-      retVal = PPA2009[-1][1]
+      PPA2009[-1][1]
     else
-      retVal = PPA2009[age][1]
+      PPA2009[age][1]
     end
-    return retVal
   end #end method calculate_qx
   
   def unit_payment(mort_disc, interest, numberOfMonths,payment)
-    return (mort_disc * payment) / ((1.0 + interest) ** (numberOfMonths / 12.0))
+    (mort_disc * payment) / ((1.0 + interest) ** (numberOfMonths / 12.0))
   end # end method unit_payment
   
   def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
@@ -108,8 +104,7 @@ include MortalityTable
 	                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
 	                    tempPeriod=0.0,rounding=12.0,outputType=0.0)
 	  errors = []
-	  immediateCalculation = 0.0
-	  jointCalculation = 0.0
+	  immediateCalculation, jointCalculation = 0.0
  
 	  #set default blank input items
 	  immediateAge = GenFactor::set_default(immediateAge,commencementAge)
@@ -150,72 +145,75 @@ include MortalityTable
 		  certainPeriod = GenFactor::sanitize_age(Float(certainPeriod))
 		  tempPeriod = GenFactor::sanitize_age(Float(tempPeriod))
 		  rounding = Float(rounding)
-	  end
+	  end #if errors.empty?
+	  
 	  if errors.empty?
 		  #now check for logical errors
 		  if (immediateAge < commencementAge) && (tempPeriod > 0.0)
 			  errors << "Error: Deferred Calculation with a Temporary Period"
 		  end
+		  
 		  if (immediateAge > commencementAge)
 			  errors << "Error: Commencement age must be greater than or equal to immediate age"
 		  end
-	  end
+		  
+	  end #if errors.empty?
+	  
 	  if errors.empty?
 		  if 0 == outputType
-			  return calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,
-											                intSegmentA,intSegmentB,intSegmentC,certainPeriod,
-											                tempPeriod,rounding)
+			  calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,
+											          intSegmentA,intSegmentB,intSegmentC,certainPeriod,
+											          tempPeriod,rounding)
 		  else
-			  return true
-		  end
+			  true
+		  end #if outputType is 0
 		  
-	  else
-		  return errors
-	  end
+	  else #errors is not empty
+      errors
+	  end #if errors.empty?
   end # end method generate_factor
   module_function :generate_factor
   
   def calculate_dx(inDX,inLX, age)
-    returnValue = inDX
     if age == age.truncate
-      returnValue = (inLX * calculate_qx(age)) / 12.0
+      (inLX * calculate_qx(age)) / 12.0
+    else
+      inDX
     end
-    return returnValue
   end #end method calculate_dx
   
   def calculate_initial_lx(inLX,inDX,age)
-    returnValue = inLX
- 
     if age != age.truncate
       monthsProrate = ((age - age.truncate) * 12.0).round
-      returnValue = inLX - (inDX * monthsProrate)
+      inLX - (inDX * monthsProrate)
+    else
+      inLX
     end
- 
-    return returnValue
   end #end method calculate_initial_lx
 
   def calculate_discount(inLX,inLXZero)
-    return Float(inLX) / Float(inLXZero)
+    Float(inLX) / Float(inLXZero)
   end #end method calculate_discount
   
   def add_month(age)
-    return GenFactor::sanitize_age((age + (1.0/12.0)))
+    GenFactor::sanitize_age((age + (1.0/12.0)))
   end #end method add_month
   
   def calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
-    returnValue = 0.0
-    if js_type == 0.0
-      returnValue = singlePV
-    elsif js_type == 1.0
-      returnValue = singlePV + (js_pct * (spousePV - jointPV))
-    elsif js_type == 2.0
-      returnValue = (js_pct * singlePV) + (js_pct * spousePV) + ((1.0-(2.0* js_pct)) * jointPV)
-    elsif js_type == 3.0
-      returnValue = singlePV + js_pct * singlePV * (spousePV - jointPV) / jointPV
-    elsif js_type == 4.0
-      returnValue = jointPV
+    case js_type
+      when 0.0
+        singlePV
+      when 1.0
+        singlePV + (js_pct * (spousePV - jointPV))
+      when 2.0
+        (js_pct * singlePV) + (js_pct * spousePV) + ((1.0-(2.0* js_pct)) * jointPV)
+      when 3.0
+        singlePV + js_pct * singlePV * (spousePV - jointPV) / jointPV
+      when 4.0
+        jointPV
+    else
+        singlePV
     end
-    return returnValue
   end #end method calculate_joint_factor
   
 end #end module udd_factor
