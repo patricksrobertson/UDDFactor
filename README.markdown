@@ -25,5 +25,12 @@ This creates a 50% Joint and Survivor Annuity using the PPA2010 mortality table 
 This creates a SLA factor with a 5 year certain period and 8 digit rounding.  This uses 5.44% for all three interest segments.
 	
 	UDDFactor::generate_factor(,65.0,,,MortalityTable::PPA2013,.0544,,,5,,8.0)
+	
+COPYRIGHT
+---------
+
+UDDFactor &copy; 2009 by [Patrick Robertson](mailto:patricksrobertson@gmail.com). Licensed under the MIT 
+license. Please see the {file:LICENSE} for more information.
+	
 
 
