@@ -1,21 +1,51 @@
+##
+# @author Patrick Robertson
+# @ version 1.0.0
+#
+# GenFactor contains some shared methods between UDDFactor and AnnuityCertain.
+##
+
 module GenFactor
   LX_ZERO = 1000000
   SEGMENT_TWO = 5.0
   SEGMENT_THREE = 20.0
   TABLE_END = 120.0
 
+  ##
+  # Rounds age to the nearest month
+  # 
+  # @since version 1.0.0
+  ##
   def sanitize_age(age)
     ((age * 12.0).round / 12.0)
-  end # end method sanitize_age
+  end 
   
+  ##
+  # Ensures interest is in 0.0-1.0 format
+  #
+  # @since version 1.0.0
+  ##
   def sanitize_interest(int)
 	  int < 1.0 ? int : (int / 100.0)
-  end #end method sanitize_interest
+  end 
   
+  ##
+  # Rounds given factor to the number of digits desired
+  #
+  # @since version 1.0.0
+  ##
   def round_factor(factor,sigFigs)
 	  (factor * (10.0**sigFigs)).round / (10.0**sigFigs)
-  end #end method round_factor
+  end 
   
+  ##
+  # Checks to see if the incoming variable can be converted to float.
+  #
+  # @return [error,float] - If the incoming variable can be converted to a float
+  #                         it returns nil, otherwise it returns the error message.
+  #
+  # @since version 1.0.0
+  ##
   def validate_float(inFloat) 
 	  returnValue = []
 	  if nil == inFloat
@@ -29,8 +59,13 @@ module GenFactor
 		  end 
 	  end
 	  returnValue
-  end #end method validate_float   
+  end   
   
+  ##
+  # Decides whether a variable needs to be defaulted or not.
+  #
+  # @since version 1.0.0
+  ##
   def set_default(inVariable,default)
 	  if nil == inVariable
 		  default
@@ -43,8 +78,13 @@ module GenFactor
 			  inVariable
 		  end
 	  end
-  end #end method set_default
+  end 
   
+  ##
+  # Ensures the J&S type is a valid one.
+  #
+  # @since version 1.0.0
+  ##
   def sanitize_js_type(inJSType)
 	  inJSType = inJSType.truncate
 	  if (0.0 == inJSType) or (1.0 == inJSType) or (2.0 == inJSType) or 
@@ -53,8 +93,13 @@ module GenFactor
 	  else
 		  "Error: Invalid Joint Annuity Type"
 	  end
-  end #end method sanitize_js_type
+  end 
   
+  ##
+  # Ensures the J&S percentage is in 0.0-1.0 format and valid.
+  #
+  # @since version 1.0.0
+  ##
   def sanitize_js_pct(inJSPct)
 	  if inJSPct < 0.0
 		  0.0
@@ -70,5 +115,5 @@ module GenFactor
 	  else
 		  inJSPct
 	  end
-  end #end method sanitize_js_pct
-end #end module GenFactor
+  end 
+end 
