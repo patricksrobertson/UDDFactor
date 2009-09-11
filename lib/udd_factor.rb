@@ -46,7 +46,7 @@ include MortalityTable
     sAge = spouseAge
     jointCalc = js_type
  
-    mortalityDiscount, mortalityDiscountSpouse, mortalityDiscountJoint = 1.0
+    mortalityDiscount = mortalityDiscountSpouse = mortalityDiscountJoint = 1.0
  
     lX = lxZero
     lXSpouse = lxZeroSpouse
@@ -58,12 +58,12 @@ include MortalityTable
     lxZero = lX
  
     lXSpouse = calculate_initial_lx(lXSpouse,dXSpouse,sAge)
-    lxZeroSpouse = lX
+    lxZeroSpouse = lXSpouse
  
     if 0.0 == lX
       retVal = 0.0 #everyone is already dead yo.
     else
-      while 0.0 < lX
+      while (lX > 0.0) or (lXSpouse > 0.0 and jointCalc > 0.0)
         if SEGMENT_TWO > (time / 12.0)
           interestRate = seg1
         elsif SEGMENT_THREE > (time / 12.0)
@@ -88,11 +88,13 @@ include MortalityTable
         if jointCalc > 0.0 and lXSpouse > 0.0
           spousePV += unit_payment(mortalityDiscountSpouse,interestRate,time,payment)
           jointPV += unit_payment(mortalityDiscountJoint,interestRate,time,payment)
-          sAge = add_month(sAge)
         end
         
         time += 1.0
         age = add_month(age)
+        if jointCalc > 0.0  
+          sAge = add_month(sAge) 
+        end
  
         lX = lX - dX
         lXSpouse = lXSpouse - dXSpouse
@@ -115,7 +117,6 @@ include MortalityTable
     end #end if lx = 0.0
     
     returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
-    
     round_factor(returnValue,rounding)
   end 
   module_function :calculate_present_value
@@ -274,11 +275,13 @@ include MortalityTable
 	  if errors.empty?
 		  #now check for logical errors
 		  if (immediateAge < commencementAge) && (tempPeriod > 0.0)
-			  errors << "Error: Deferred Calculation with a Temporary Period"
+			  errorString = "Error: Deferred Calculation with a Temporary Period"
+			  errors = GenFactor::append_error(errors,errorString)	
 		  end
 		  
 		  if (immediateAge > commencementAge)
-			  errors << "Error: Commencement age must be greater than or equal to immediate age"
+			  errorString = "Error: Commencement age must be greater than or equal to immediate age"
+        errors = GenFactor::append_error(errors,errorString)				  
 		  end
 		  
 	  end #if errors.empty?

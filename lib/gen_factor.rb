@@ -241,7 +241,7 @@ module GenFactor
       when 0.0
         singlePV
       when 1.0
-        singlePV + (js_pct * (spousePV - jointPV))
+        singlePV + js_pct * (spousePV - jointPV)
       when 2.0
         (js_pct * singlePV) + (js_pct * spousePV) + ((1.0-(2.0* js_pct)) * jointPV)
       when 3.0

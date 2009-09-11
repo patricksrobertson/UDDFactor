@@ -149,6 +149,90 @@ class UDDFactorTest < Test::Unit::TestCase
     factor = UDDFactor.generate_factor("",65.0,0.0,0.0,0.0,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
     assert_equal factor, 11.435594641924
   end  
+
+  def test_imm_greater_than_comm
+    #testing for an age immediate age being greater than commencement age
+    factor = UDDFactor.generate_factor(66.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, "Error: Commencement age must be greater than or equal to immediate age"
+  end
+  
+  def test_temp_def_calc
+    #testing for a temporary & deferred calculation
+    factor = UDDFactor.generate_factor(64.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,1.0,12.0)
+    assert_equal factor, "Error: Deferred Calculation with a Temporary Period"
+  end  
+  
+  def test_js_sp_young
+    #testing for a J&S Factor where the spouse is younger than the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,47.667,1.0,0.67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 14.314945444020
+  end  
+
+  def test_js_sp_same
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,65.0,1.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 12.692200767317
+  end
+ 
+  def test_js_sp_old
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,67.167,1.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 12.513757506115
+  end 
+  
+  def test_js_true_sp_young
+    #testing for a J&S Factor where the spouse is younger than the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,47.667,2.0,0.67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 14.212643902413
+  end  
+
+  def test_js_true_sp_same
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,65.0,2.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 12.073275362273
+  end
+ 
+  def test_js_true_sp_old
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,67.167,2.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 11.777562337498
+  end  
+  
+  def test_js_pop_sp_young
+    #testing for a J&S Factor where the spouse is younger than the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,47.667,3.0,0.67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 14.395175993773
+  end  
+
+  def test_js_pop_sp_same
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,65.0,3.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 12.938726797745
+  end
+ 
+  def test_js_pop_sp_old
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,67.167,3.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 12.775066131083
+  end  
+  
+  def test_js_joint_sp_young
+    #testing for a J&S Factor where the spouse is younger than the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,47.667,4.0,0.67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 11.125589970387
+  end  
+
+  def test_js_joint_sp_same
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,65.0,4.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 9.560063111486
+  end
+ 
+  def test_js_joint_sp_old
+    #testing for a J&S Factor where the spouse is the same age as the primary
+    factor = UDDFactor.generate_factor(65.0,65.0,67.167,4.0,67,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 9.204700191569
+  end  
   
   def default_test
       assert true
