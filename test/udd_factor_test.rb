@@ -9,6 +9,30 @@ class UDDFactorTest < Test::Unit::TestCase
     assert_equal factor, 11.435594641924
   end
   
+  def test_nrd_sla_2010
+    #testing for an age 65 immediate factor for 2010
+    factor = UDDFactor.generate_factor(65.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2010,5.24,5.69,5.37,0.0,0.0,6.0)
+    assert_equal factor, 11.458457
+  end  
+  
+  def test_nrd_sla_2011
+    #testing for an age 65 immediate factor for 2011
+    factor = UDDFactor.generate_factor(65.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2011,5.24,5.69,5.37,0.0,0.0,6.0)
+    assert_equal factor, 11.481172
+  end  
+  
+  def test_nrd_sla_2012
+    #testing for an age 65 immediate factor for 2012
+    factor = UDDFactor.generate_factor(65.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2012,5.24,5.69,5.37,0.0,0.0,6.0)
+    assert_equal factor, 11.503803
+  end  
+  
+  def test_nrd_sla_2013
+    #testing for an age 65 immediate factor for 2012
+    factor = UDDFactor.generate_factor(65.0,65.0,0.0,0.0,0.0,MortalityTable::PPA2013,5.24,5.69,5.37,0.0,0.0,6.0)
+    assert_equal factor, 11.52628
+  end  
+  
   def test_def_nrd_sla
     #testing for a deferred factor to 65.
     factor = UDDFactor.generate_factor(61.083,65.0,0.0,0.0,0.0,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)

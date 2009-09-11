@@ -20,6 +20,7 @@ include MortalityTable
   # @param [0.0,1.0,2.0,3.0,4.0] js_type - Joint and Survivor Type: See {#calculate_joint_factor} for valid values
   # @param [0.0-1.0] js_pct - Joint and Survivor Percent: Value between 0.0 and 1.0 that represents the amount
   #                         a survivor will receive.
+  # @param [Array] mortality - Mortality table for q(x) lookup
   # @param [0.0-1.0] seg1 - Segment 1: The first segment interest rate.
   # @param [0.0-1.0] seg2 - Segment 2: The second segment interest rate.
   # @param [0.0-1.0] seg3 - Segment 3: The third segment interest rate.  
@@ -37,7 +38,7 @@ include MortalityTable
   #
   # @since version 1.0.0
   ##
-  def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,seg1,seg2,seg3,certain,temp,rounding)
+  def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,mortality,seg1,seg2,seg3,certain,temp,rounding)
     returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
     age = immAge
     dAge = defAge
@@ -50,8 +51,8 @@ include MortalityTable
     lX = lxZero
     lXSpouse = lxZeroSpouse
  
-    dX = calculate_dx(0.0,lX,age.truncate)
-    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate)
+    dX = calculate_dx(0.0,lX,age.truncate,mortality)
+    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,mortality)
  
     lX = calculate_initial_lx(lX,dX,age)
     lxZero = lX
@@ -96,8 +97,8 @@ include MortalityTable
         lX = lX - dX
         lXSpouse = lXSpouse - dXSpouse
  
-        dX = calculate_dx(dX,lX,age)
-        dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge)
+        dX = calculate_dx(dX,lX,age,mortality)
+        dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge,mortality)
         if nil != certain
           if age >= (dAge + certain) || age <= dAge
             mortalityDiscount = calculate_discount(lX, lxZero)
@@ -116,7 +117,6 @@ include MortalityTable
     returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
     
     round_factor(returnValue,rounding)
- 
   end 
   module_function :calculate_present_value
 
@@ -285,7 +285,7 @@ include MortalityTable
 	  
 	  if errors.empty?
 		  if 0 == outputType
-			  calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,
+			  calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,mortality,
 											          intSegmentA,intSegmentB,intSegmentC,certainPeriod,
 											          tempPeriod,rounding)
 		  else

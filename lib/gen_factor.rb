@@ -129,9 +129,9 @@ module GenFactor
   #
   # @since version 1.0.0
   ##
-  def calculate_dx(inDX,inLX, age)
+  def calculate_dx(inDX,inLX,age,mortality)
     if age == age.truncate
-      (inLX * calculate_qx(age)) / 12.0
+      (inLX * calculate_qx(age,mortality)) / 12.0
     else
       inDX
     end
@@ -149,13 +149,13 @@ module GenFactor
   #
   # @since version 1.0.0
   ##
-  def calculate_qx(age)
+  def calculate_qx(age,mortality=MortalityTable::PPA2010)
     age = age.truncate
-    max_age = MortalityTable::PPA2009[-1][0]
+    max_age = mortality[-1][0]
     if age > max_age
-      MortalityTable::PPA2009[-1][1]
+      mortality[-1][1]
     else
-      MortalityTable::PPA2009[age][1]
+      mortality[age][1]
     end
   end
  
