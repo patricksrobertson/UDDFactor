@@ -35,22 +35,7 @@ module AnnuityCertain
   end
   module_function :annuity_certain 
   
-  ##
-  # returns the interest discount
-  # @since version 1.0.0
-  ##	  
-  def interest_discount(int_rate)
-	  int_rate = sanitize_interest(int_rate)
-	  1.0 / (1.0 + int_rate)
-  end 
-  
-  ##
-  # returns the yearly discount(this is a poor name for it)
-  # @since version 1.0.0
-  ##
-  def yearly_discount(int_disc)
-	  12.0 * (1.0 - (int_disc ** (1.0/12.0)))
-  end 
+
   
   ##
   # Calculates either a simple segment, or one of three segments of an annuity certain
@@ -90,5 +75,6 @@ module AnnuityCertain
 		    nil
 	  end
   end
+  module_function :annuity_certain_combined
 
 end

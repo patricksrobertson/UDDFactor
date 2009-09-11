@@ -62,44 +62,6 @@ certain factor.
       </td>
     </tr>
   
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#interest_discount-instance_method" title="#interest_discount">#interest_discount</a></span><span class='args'>(int_rate)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-returns the interest discount.
-</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#yearly_discount-instance_method" title="#yearly_discount">#yearly_discount</a></span><span class='args'>(int_disc)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-returns the yearly discount(this is a poor name for it).
-</p>
-
-        
-      </td>
-    </tr>
-  
 </table>
 
   </div>
@@ -306,6 +268,21 @@ version 1.0.0
           <pre class="lines">
 
 
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
 69
 70
 71
@@ -314,25 +291,10 @@ version 1.0.0
 74
 75
 76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92</pre>
+77</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 69</span>
+          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 54</span>
 
 <span class='def def kw'>def</span> <span class='annuity_certain_combined identifier id'>annuity_certain_combined</span><span class='lparen token'>(</span><span class='mult op'>*</span><span class='args identifier id'>args</span><span class='rparen token'>)</span>
   <span class='retVal identifier id'>retVal</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
@@ -367,151 +329,13 @@ version 1.0.0
 </div>
     </div>
   
-    <div class="method">
-      <div class="method_header">
-  <h3>interest_discount</h3>
-</div><div id="interest_discount-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'></span>
-      <span class='name'>interest_discount</span><span class='args'>(int_rate)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-returns the interest discount
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-42
-43
-44
-45</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 42</span>
-
-<span class='def def kw'>def</span> <span class='interest_discount identifier id'>interest_discount</span><span class='lparen token'>(</span><span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
-  <span class='int_rate identifier id'>int_rate</span> <span class='assign token'>=</span> <span class='sanitize_interest identifier id'>sanitize_interest</span><span class='lparen token'>(</span><span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
-  <span class='float val'>1.0</span> <span class='div op'>/</span> <span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='plus op'>+</span> <span class='int_rate identifier id'>int_rate</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>yearly_discount</h3>
-</div><div id="yearly_discount-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'></span>
-      <span class='name'>yearly_discount</span><span class='args'>(int_disc)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-returns the yearly discount(this is a poor name for it)
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-51
-52
-53</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/annuity_certain.rb', line 51</span>
-
-<span class='def def kw'>def</span> <span class='yearly_discount identifier id'>yearly_discount</span><span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span><span class='rparen token'>)</span>
-  <span class='float val'>12.0</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='int_disc identifier id'>int_disc</span> <span class='pow op'>**</span> <span class='lparen token'>(</span><span class='float val'>1.0</span><span class='div op'>/</span><span class='float val'>12.0</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
 </div>
   </div>
 
 </div>
     </div>
     <div id="yard_info">
-  Generated on Wednesday, September 09 2009 at 07:28:56 PM by 
+  Generated on Thursday, September 10 2009 at 05:16:53 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>

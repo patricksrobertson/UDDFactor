@@ -2,9 +2,9 @@ UDDFactor Release 1.0.0 (September 9th 2009)
 ============================================
 
 **Homepage**: [http://github.com/jbplatter](http://github.com/jbcplatter)
-**Author**: Patrick Robertson
+**Author**: [Patrick Robertson](mailto:patricksrobertson@gmail.com)
 **Copyright**: 2009
-**License**: MIT License
+**License**: [MIT License](file:LICENSE)
 
 
 SYNOPSIS

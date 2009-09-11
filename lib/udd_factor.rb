@@ -38,10 +38,10 @@ include MortalityTable
   # @since version 1.0.0
   ##
   def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,seg1,seg2,seg3,certain,temp,rounding)
-    returnValue, singlePV, spousePV, jointPV, time, payment = 0.0
+    returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
     age = immAge
     dAge = defAge
-    lxZero, lxZeroSpouse = LX_ZERO
+    lxZero = lxZeroSpouse = LX_ZERO
     sAge = spouseAge
     jointCalc = js_type
  
@@ -120,48 +120,6 @@ include MortalityTable
   end 
   module_function :calculate_present_value
 
- ## 
- # Retrieves the q(x) from the appropriate mortality table.
- #
- # @example 
- # "calculate_qx(55.0)"
- #
- # @return [float] q(x)
- #
- # @todo Add in additional mortality table support
- #
- # @since version 1.0.0
- ##
-  def calculate_qx(age)
-    age = age.truncate
-    max_age = PPA2009[-1][0]
-    if age > max_age
-      PPA2009[-1][1]
-    else
-      PPA2009[age][1]
-    end
-  end 
-
-  ##
-  # Calculates a single unit payment given a nPx, interest rate, time elapsed
-  # and what period is being payed.
-  #
-  # @example
-  # "unit_payment(0.99832,0.0544,12,0.833....)"
-  #
-  # @param [float] mort_disc - nPx at given time.
-  # @param [float] interest - applicable interest rate
-  # @param [float] numberOfMonths - the specific point in time for the calculation.
-  # @param [float] payment - The amount being paid (1/12 or 0)
-  #
-  # @return [float] Unit payment.
-  #
-  # @since version 1.0.0
-  ##
-  
-  def unit_payment(mort_disc, interest, numberOfMonths,payment)
-    (mort_disc * payment) / ((1.0 + interest) ** (numberOfMonths / 12.0))
-  end 
   
   ##
   # Validates input parameters then generates a Present Value Factor.
@@ -217,33 +175,101 @@ include MortalityTable
 	  rounding = GenFactor::set_default(rounding,12.0)
  
 	  #check to make sure we can do the calculation first
-	  GenFactor::validate_float(immediateAge) != nil ? errors << "Immediate Age: " + GenFactor::validate_float(immediateAge) :
-	  GenFactor::validate_float(commencementAge) != nil ? errors << "Commencement Age: " + GenFactor::validate_float(commencementAge) :
-	  GenFactor::validate_float(intSegmentA) != nil ? errors << "Interest Segment A: " + GenFactor::validate_float(intSegmentA) :
-	  GenFactor::validate_float(spAge) != nil ? errors << "Spousal Age: " + GenFactor::validate_float(spAge) :
-	  GenFactor::validate_float(jsType) != nil ? errors << "Joint Factor Type: " + GenFactor::validate_float(jsType) :
-	  GenFactor::validate_float(jsPct) != nil ? errors << "Joint Factor Percent: " + GenFactor::validate_float(jsPct) :
-	  #errors << validate_mortality(mortality) #not implemented yet
-	  GenFactor::validate_float(intSegmentB) != nil ? errors << "Interest Segment B: " + GenFactor::validate_float(intSegmentB) :
-	  GenFactor::validate_float(intSegmentC) != nil ? errors << "Interest Segment C: " + GenFactor::validate_float(intSegmentC) :
-	  GenFactor::validate_float(certainPeriod) != nil ? errors << "Certain Period: " + GenFactor::validate_float(certainPeriod) :
-	  GenFactor::validate_float(tempPeriod) != nil ? errors << "Temporary Period: " + GenFactor::validate_float(tempPeriod) :
-	  GenFactor::validate_float(rounding) != nil ? errors << "Rounding: " + GenFactor::validate_float(rounding) :
- 
-	  if errors.empty?
-		  #agjust ages/periods to 1/12th of a year, make sure interest rates are grrrrreat!
-		  immediateAge = GenFactor::sanitize_age(Float(immediateAge))
-		  commencementAge = GenFactor::sanitize_age(Float(commencementAge))
+	  begin 
+	    immediateAge = GenFactor::sanitize_age(Float(immediateAge)) 
+	  rescue
+	    errorString = "Immediate age cannot be converted into a number"
+	    errors = GenFactor::append_error(errors,errorString)
+	  end 
+	  begin
+	    commencementAge = GenFactor::sanitize_age(Float(commencementAge))  
+	  rescue
+	    errorString = "Commencement age cannot be converted into a number"
+	    errors = GenFactor::append_error(errors,errorString)
+	  end
+	  begin
 		  spAge = GenFactor::sanitize_age(Float(spAge))
+		rescue
+		  errorString = "Spousal age cannot be converted into a number"
+		  errors = GenFactor::append_error(errors,errorString)	      
+		end
+		begin
 		  jsType = GenFactor::sanitize_js_type(Float(jsType))
+		rescue
+		  errorString = "JS Type cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)
+		end
+		#mortality validation time.  
+		unless mortality.is_a? Array
+		  errorString = "Mortality Table must be an array"
+		  errors = GenFactor::append_error(errors,errorString)
+		else
+		  cErrorCount = 0.0
+		  mortality.each do |ii|
+		    begin
+		      tempy = ii
+		      tempo = Float(tempy[0])
+		      tempsan = Float(tempy[1])
+		    rescue
+	          cErrorCount += 1.0
+		    end
+	    end
+	    if cErrorCount > 0.0
+	      errorString = "Invalid mortality table format: cannot convert all elements to numbers"
+        errors = GenFactor::append_error(errors,errorString)
+      else
+        unless (mortality[0][0] == 0.0) and (mortality[0][1] == 0.0)
+          errorString = "Invalid mortality table format: first row is not 0.0,0.0"
+          errors = GenFactor::append_error(errors,errorString)
+        end
+        unless mortality[-1][1] == 1.0
+          errorString = "Invalid mortality table format: last row does not have a q(x) of 1.0"
+          errors = GenFactor::append_error(errors,errorString)
+        end        
+      end
+		end
+		begin
 		  jsPct = GenFactor::sanitize_js_pct(Float(jsPct))
-		  intSegmentA = GenFactor::sanitize_interest(Float(intSegmentA))
+		rescue
+		  errorString = "JS percent cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		
+		end
+		begin
+      intSegmentA = GenFactor::sanitize_interest(Float(intSegmentA))		  
+    rescue
+		  errorString = "Interest segment A cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)      
+		end
+		begin
 		  intSegmentB = GenFactor::sanitize_interest(Float(intSegmentB))
+		rescue
+		  errorString = "Interest segment B cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		  		  
+		end
+		begin
 		  intSegmentC = GenFactor::sanitize_interest(Float(intSegmentC))
+		rescue
+		  errorString = "Interest segment C cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		  
+		end
+    begin
 		  certainPeriod = GenFactor::sanitize_age(Float(certainPeriod))
+		rescue
+		  errorString = "Certain period cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		        
+		end
+		begin
 		  tempPeriod = GenFactor::sanitize_age(Float(tempPeriod))
+		rescue
+		  errorString = "Temporary period cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		  		  
+		end
+		begin
 		  rounding = Float(rounding)
-	  end #if errors.empty?
+		rescue
+		  errorString = "Rounding cannot be converted into a number"		
+		  errors = GenFactor::append_error(errors,errorString)		  
+		end
 	  
 	  if errors.empty?
 		  #now check for logical errors
@@ -271,100 +297,5 @@ include MortalityTable
 	  end #if errors.empty?
   end
   module_function :generate_factor
-  
-  ##
-  # Calculates the number people that will die at the current age.  Doesn't
-  # recalculate unless the current age is an integer.
-  #
-  # @example
-  # "calculate_dx(308.0,987343,56.083...)"
-  #
-  # @return [float] If the age is a whole integer age, will return a new amount of 
-  #                 people that will die at that age.  Otherwise returns the input
-  #                 age.
-  #
-  # @since version 1.0.0
-  ##
-  def calculate_dx(inDX,inLX, age)
-    if age == age.truncate
-      (inLX * calculate_qx(age)) / 12.0
-    else
-      inDX
-    end
-  end
-  
-  ## 
-  # calculates amount of people alive at a given age.  If the age is a whole age,
-  # it does nothing.  Otherwise it performs linear interporlation on the number of 
-  # people that will die at the age.
-  #
-  # @example 
-  # "calculate_initial_lx(1000000.0,360.0,55.083...)"
-  #
-  # @return [float] If age is whole integer age, lX.  Otherwise interpolated l(x).
-  #
-  # @since 1.0.0
-  ##
-  def calculate_initial_lx(inLX,inDX,age)
-    if age != age.truncate
-      monthsProrate = ((age - age.truncate) * 12.0).round
-      inLX - (inDX * monthsProrate)
-    else
-      inLX
-    end
-  end 
-
-  ## 
-  # calculates the nPx value given an l(x) and l(0)
-  #
-  # @example 
-  # "calculate_discount(999500.0,1000000.0)"
-  # 
-  # @return [float] nPx
-  # 
-  # @since version 1.0.0
-  ##
-  def calculate_discount(inLX,inLXZero)
-    Float(inLX) / Float(inLXZero)
-  end
-  
-  ##
-  # Adds a month and then rounds to the nearest month.
-  ##
-  def add_month(age) 
-    GenFactor::sanitize_age((age + (1.0/12.0)))
-  end 
-  
-  ##
-  # Given a primary, secondary, and joint present value, it will calculate SLA's,
-  # normal J&S factors, "true" J&S factors, J&S factors with "pop-up", and Joint
-  # annuities.
-  #
-  # @example J&S with "pop-up"
-  # "calculate_joint_factor(12.2342,11.4421,9.3435,3.0,0.50)"
-  #
-  # @param [0.0,1.0,2.0,3.0,4.0] js_type - Determines the J&S type.  0- SLA, 1- normal J&S,
-  #                                        2 - "true" J&S, 3 - J&S + pop-up, 4 - Joint Annuity.
-  #
-  # @return [float] Present value factor
-  #
-  # @since version 1.0.0
-  ##
-  def calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
-    case js_type
-      when 0.0
-        singlePV
-      when 1.0
-        singlePV + (js_pct * (spousePV - jointPV))
-      when 2.0
-        (js_pct * singlePV) + (js_pct * spousePV) + ((1.0-(2.0* js_pct)) * jointPV)
-      when 3.0
-        singlePV + js_pct * singlePV * (spousePV - jointPV) / jointPV
-      when 4.0
-        jointPV
-    else
-        singlePV
-    end
-  end 
   
 end

@@ -31,131 +31,6 @@
       <th class="signature">
         
           <span class='overload'>
-            <span class='name'><a href="#add_month-instance_method" title="#add_month">#add_month</a></span><span class='args'>(age)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Adds a month and then rounds to the nearest month.
-</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#calculate_discount-instance_method" title="#calculate_discount">#calculate_discount</a></span><span class='args'>(inLX, inLXZero)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-calculates the nPx value given an l(x) and l(0).
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#calculate_dx-instance_method" title="#calculate_dx">#calculate_dx</a></span><span class='args'>(inDX, inLX, age)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Calculates the number people that will die at the current age.
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#calculate_initial_lx-instance_method" title="#calculate_initial_lx">#calculate_initial_lx</a></span><span class='args'>(inLX, inDX, age)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-calculates amount of people alive at a given age.
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#calculate_joint_factor-instance_method" title="#calculate_joint_factor">#calculate_joint_factor</a></span><span class='args'>(singlePV, spousePV, jointPV, js_type, js_pct)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Given a primary, secondary, and joint present value, it will calculate
-SLA&#8217;s, normal J&amp;S factors, &quot;true&quot; J&amp;S factors,
-J&amp;S factors with &quot;pop-up&quot;, and Joint annuities.
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
             <span class='name'><a href="#calculate_present_value-instance_method" title="#calculate_present_value">#calculate_present_value</a></span><span class='args'>(immAge, defAge, spouseAge, js_type, js_pct, seg1, seg2, seg3, certain, temp, rounding)</span>
             <span class='block'></span>
           </span>
@@ -166,32 +41,6 @@ J&amp;S factors with &quot;pop-up&quot;, and Joint annuities.
         <p>
 Calculates the present value of each unit payment and sums them to create a
 factor.
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#calculate_qx-instance_method" title="#calculate_qx">#calculate_qx</a></span><span class='args'>(age)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Retrieves the q(x) from the appropriate mortality table.
 </p>
 
         
@@ -231,39 +80,12 @@ Validates input parameters then generates a Present Value Factor.
       </td>
     </tr>
   
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
-            <span class='name'><a href="#unit_payment-instance_method" title="#unit_payment">#unit_payment</a></span><span class='args'>(mort_disc, interest, numberOfMonths, payment)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Calculates a single unit payment given a nPx, interest rate, time elapsed
-and what period is being payed.
-</p>
-
-        
-          <p class='returns'>
-            Returns: 
-              <span class='return_types'>
-                 <tt>float</tt>
-              </span>
-          </p>
-        
-      </td>
-    </tr>
-  
 </table>
 <div class="included">
   
   <div>
     <h1>Public Instance Methods Included from <a href="UDDFactor/GenFactor.html" title="GenFactor">GenFactor</a></h1>
-    <p><span class='name'><a href="GenFactor.html#round_factor-instance_method" title="round_factor">round_factor</a></span>, <span class='name'><a href="GenFactor.html#sanitize_age-instance_method" title="sanitize_age">sanitize_age</a></span>, <span class='name'><a href="GenFactor.html#sanitize_interest-instance_method" title="sanitize_interest">sanitize_interest</a></span>, <span class='name'><a href="GenFactor.html#sanitize_js_pct-instance_method" title="sanitize_js_pct">sanitize_js_pct</a></span>, <span class='name'><a href="GenFactor.html#sanitize_js_type-instance_method" title="sanitize_js_type">sanitize_js_type</a></span>, <span class='name'><a href="GenFactor.html#set_default-instance_method" title="set_default">set_default</a></span>, <span class='name'><a href="GenFactor.html#validate_float-instance_method" title="validate_float">validate_float</a></span></p>
+    <p><span class='name'><a href="GenFactor.html#add_month-instance_method" title="add_month">add_month</a></span>, <span class='name'><a href="GenFactor.html#calculate_discount-instance_method" title="calculate_discount">calculate_discount</a></span>, <span class='name'><a href="GenFactor.html#calculate_dx-instance_method" title="calculate_dx">calculate_dx</a></span>, <span class='name'><a href="GenFactor.html#calculate_initial_lx-instance_method" title="calculate_initial_lx">calculate_initial_lx</a></span>, <span class='name'><a href="GenFactor.html#calculate_joint_factor-instance_method" title="calculate_joint_factor">calculate_joint_factor</a></span>, <span class='name'><a href="GenFactor.html#calculate_qx-instance_method" title="calculate_qx">calculate_qx</a></span>, <span class='name'><a href="GenFactor.html#interest_discount-instance_method" title="interest_discount">interest_discount</a></span>, <span class='name'><a href="GenFactor.html#round_factor-instance_method" title="round_factor">round_factor</a></span>, <span class='name'><a href="GenFactor.html#sanitize_age-instance_method" title="sanitize_age">sanitize_age</a></span>, <span class='name'><a href="GenFactor.html#sanitize_interest-instance_method" title="sanitize_interest">sanitize_interest</a></span>, <span class='name'><a href="GenFactor.html#sanitize_js_pct-instance_method" title="sanitize_js_pct">sanitize_js_pct</a></span>, <span class='name'><a href="GenFactor.html#sanitize_js_type-instance_method" title="sanitize_js_type">sanitize_js_type</a></span>, <span class='name'><a href="GenFactor.html#set_default-instance_method" title="set_default">set_default</a></span>, <span class='name'><a href="GenFactor.html#unit_payment-instance_method" title="unit_payment">unit_payment</a></span>, <span class='name'><a href="GenFactor.html#validate_float-instance_method" title="validate_float">validate_float</a></span>, <span class='name'><a href="GenFactor.html#yearly_discount-instance_method" title="yearly_discount">yearly_discount</a></span></p>
   </div>
   
 </div>
@@ -271,521 +93,6 @@ and what period is being payed.
   </div>
 <div class="section methoddetails instance public">
   <h1>Public Instance Method Details</h1>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>add_month</h3>
-</div><div id="add_month-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'></span>
-      <span class='name'>add_month</span><span class='args'>(age)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Adds a month and then rounds to the nearest month.
-</p>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-334
-335
-336</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 334</span>
-
-<span class='def def kw'>def</span> <span class='add_month identifier id'>add_month</span><span class='lparen token'>(</span><span class='age identifier id'>age</span><span class='rparen token'>)</span> 
-  <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='sanitize_age identifier id'>sanitize_age</span><span class='lparen token'>(</span><span class='lparen token'>(</span><span class='age identifier id'>age</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='float val'>1.0</span><span class='div op'>/</span><span class='float val'>12.0</span><span class='rparen token'>)</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>calculate_discount</h3>
-</div><div id="calculate_discount-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_discount</span><span class='args'>(inLX, inLXZero)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-calculates the nPx value given an l(x) and l(0)
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small></small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;calculate_discount(999500.0,1000000.0)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-nPx
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-327
-328
-329</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 327</span>
-
-<span class='def def kw'>def</span> <span class='calculate_discount identifier id'>calculate_discount</span><span class='lparen token'>(</span><span class='inLX identifier id'>inLX</span><span class='comma token'>,</span><span class='inLXZero identifier id'>inLXZero</span><span class='rparen token'>)</span>
-  <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='inLX identifier id'>inLX</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='inLXZero identifier id'>inLXZero</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>calculate_dx</h3>
-</div><div id="calculate_dx-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_dx</span><span class='args'>(inDX, inLX, age)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Calculates the number people that will die at the current age.
-Doesn&#8217;t recalculate unless the current age is an integer.
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small></small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;calculate_dx(308.0,987343,56.083...)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-If the age is a whole integer age, will return a new amount of people that
-will die at that age. Otherwise returns the input age.
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-288
-289
-290
-291
-292
-293
-294</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 288</span>
-
-<span class='def def kw'>def</span> <span class='calculate_dx identifier id'>calculate_dx</span><span class='lparen token'>(</span><span class='inDX identifier id'>inDX</span><span class='comma token'>,</span><span class='inLX identifier id'>inLX</span><span class='comma token'>,</span> <span class='age identifier id'>age</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='age identifier id'>age</span> <span class='eq op'>==</span> <span class='age identifier id'>age</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span>
-    <span class='lparen token'>(</span><span class='inLX identifier id'>inLX</span> <span class='mult op'>*</span> <span class='calculate_qx identifier id'>calculate_qx</span><span class='lparen token'>(</span><span class='age identifier id'>age</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='float val'>12.0</span>
-  <span class='else else kw'>else</span>
-    <span class='inDX identifier id'>inDX</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>calculate_initial_lx</h3>
-</div><div id="calculate_initial_lx-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_initial_lx</span><span class='args'>(inLX, inDX, age)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-calculates amount of people alive at a given age. If the age is a whole
-age, it does nothing. Otherwise it performs linear interporlation on the
-number of people that will die at the age.
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small></small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;calculate_initial_lx(1000000.0,360.0,55.083...)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-If age is whole integer age, lX. Otherwise interpolated l(x).
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-308
-309
-310
-311
-312
-313
-314
-315</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 308</span>
-
-<span class='def def kw'>def</span> <span class='calculate_initial_lx identifier id'>calculate_initial_lx</span><span class='lparen token'>(</span><span class='inLX identifier id'>inLX</span><span class='comma token'>,</span><span class='inDX identifier id'>inDX</span><span class='comma token'>,</span><span class='age identifier id'>age</span><span class='rparen token'>)</span>
-  <span class='if if kw'>if</span> <span class='age identifier id'>age</span> <span class='neq op'>!=</span> <span class='age identifier id'>age</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span>
-    <span class='monthsProrate identifier id'>monthsProrate</span> <span class='assign token'>=</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='age identifier id'>age</span> <span class='minus op'>-</span> <span class='age identifier id'>age</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='float val'>12.0</span><span class='rparen token'>)</span><span class='dot token'>.</span><span class='round identifier id'>round</span>
-    <span class='inLX identifier id'>inLX</span> <span class='minus op'>-</span> <span class='lparen token'>(</span><span class='inDX identifier id'>inDX</span> <span class='mult op'>*</span> <span class='monthsProrate identifier id'>monthsProrate</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='inLX identifier id'>inLX</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>calculate_joint_factor</h3>
-</div><div id="calculate_joint_factor-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_joint_factor</span><span class='args'>(singlePV, spousePV, jointPV, js_type, js_pct)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Given a primary, secondary, and joint present value, it will calculate
-SLA&#8217;s, normal J&amp;S factors, &quot;true&quot; J&amp;S factors,
-J&amp;S factors with &quot;pop-up&quot;, and Joint annuities.
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small>J&S with "pop-up"</small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;calculate_joint_factor(12.2342,11.4421,9.3435,3.0,0.50)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="param">
-  <h3>Parameters:</h3>
-  <dl>
-  
-    
-      <dt>
-        <span class='type'>[<tt>0.0</tt>, <tt>1.0</tt>, <tt>2.0</tt>, <tt>3.0</tt>, <tt>4.0</tt>]</span>
-        <span class='name'>js_type</span>
-        
-      </dt>
-      <dd>
-        <span class='desc'><ul>
-<li>Determines the J&amp;S type. 0- SLA, 1- normal J&amp;S, 2 -
-&quot;true&quot; J&amp;S, 3 - J&amp;S + pop-up, 4 - Joint Annuity.
-
-</li>
-</ul>
-</span>
-      </dd>
-    
-  
-  </dl>
-</div><div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-Present value factor
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 353</span>
-
-<span class='def def kw'>def</span> <span class='calculate_joint_factor identifier id'>calculate_joint_factor</span><span class='lparen token'>(</span><span class='singlePV identifier id'>singlePV</span><span class='comma token'>,</span><span class='spousePV identifier id'>spousePV</span><span class='comma token'>,</span><span class='jointPV identifier id'>jointPV</span><span class='comma token'>,</span><span class='js_type identifier id'>js_type</span><span class='comma token'>,</span><span class='js_pct identifier id'>js_pct</span><span class='rparen token'>)</span>
-  <span class='case case kw'>case</span> <span class='js_type identifier id'>js_type</span>
-    <span class='when when kw'>when</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
-      <span class='singlePV identifier id'>singlePV</span>
-    <span class='when when kw'>when</span> <span class='float val'>1.0</span>
-      <span class='singlePV identifier id'>singlePV</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='js_pct identifier id'>js_pct</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='spousePV identifier id'>spousePV</span> <span class='minus op'>-</span> <span class='jointPV identifier id'>jointPV</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='float val'>2.0</span>
-      <span class='lparen token'>(</span><span class='js_pct identifier id'>js_pct</span> <span class='mult op'>*</span> <span class='singlePV identifier id'>singlePV</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='js_pct identifier id'>js_pct</span> <span class='mult op'>*</span> <span class='spousePV identifier id'>spousePV</span><span class='rparen token'>)</span> <span class='plus op'>+</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='float val'>1.0</span><span class='minus op'>-</span><span class='lparen token'>(</span><span class='float val'>2.0</span><span class='mult op'>*</span> <span class='js_pct identifier id'>js_pct</span><span class='rparen token'>)</span><span class='rparen token'>)</span> <span class='mult op'>*</span> <span class='jointPV identifier id'>jointPV</span><span class='rparen token'>)</span>
-    <span class='when when kw'>when</span> <span class='float val'>3.0</span>
-      <span class='singlePV identifier id'>singlePV</span> <span class='plus op'>+</span> <span class='js_pct identifier id'>js_pct</span> <span class='mult op'>*</span> <span class='singlePV identifier id'>singlePV</span> <span class='mult op'>*</span> <span class='lparen token'>(</span><span class='spousePV identifier id'>spousePV</span> <span class='minus op'>-</span> <span class='jointPV identifier id'>jointPV</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='jointPV identifier id'>jointPV</span>
-    <span class='when when kw'>when</span> <span class='float val'>4.0</span>
-      <span class='jointPV identifier id'>jointPV</span>
-  <span class='else else kw'>else</span>
-      <span class='singlePV identifier id'>singlePV</span>
-  <span class='end end kw'>end</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
   
     <div class="method">
       <div class="method_header">
@@ -879,7 +186,7 @@ factor. This method lacks the validation of generate_factor.
       </dt>
       <dd>
         <span class='desc'><ul>
-<li>Joint and Survivor Type: See <tt><a href="#calculate_joint_factor-instance_method" title="#calculate_joint_factor">#calculate_joint_factor</a></tt> for valid values
+<li>Joint and Survivor Type: See <tt><a href="GenFactor.html#calculate_joint_factor-instance_method" title="#calculate_joint_factor">#calculate_joint_factor</a></tt> for valid values
 
 </li>
 </ul>
@@ -1145,10 +452,10 @@ version 1.0.0
           <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 40</span>
 
 <span class='def def kw'>def</span> <span class='calculate_present_value identifier id'>calculate_present_value</span><span class='lparen token'>(</span><span class='immAge identifier id'>immAge</span><span class='comma token'>,</span><span class='defAge identifier id'>defAge</span><span class='comma token'>,</span><span class='spouseAge identifier id'>spouseAge</span><span class='comma token'>,</span><span class='js_type identifier id'>js_type</span><span class='comma token'>,</span><span class='js_pct identifier id'>js_pct</span><span class='comma token'>,</span><span class='seg1 identifier id'>seg1</span><span class='comma token'>,</span><span class='seg2 identifier id'>seg2</span><span class='comma token'>,</span><span class='seg3 identifier id'>seg3</span><span class='comma token'>,</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='temp identifier id'>temp</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='rparen token'>)</span>
-  <span class='returnValue identifier id'>returnValue</span><span class='comma token'>,</span> <span class='singlePV identifier id'>singlePV</span><span class='comma token'>,</span> <span class='spousePV identifier id'>spousePV</span><span class='comma token'>,</span> <span class='jointPV identifier id'>jointPV</span><span class='comma token'>,</span> <span class='time identifier id'>time</span><span class='comma token'>,</span> <span class='payment identifier id'>payment</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
+  <span class='returnValue identifier id'>returnValue</span> <span class='assign token'>=</span> <span class='singlePV identifier id'>singlePV</span> <span class='assign token'>=</span> <span class='spousePV identifier id'>spousePV</span> <span class='assign token'>=</span> <span class='jointPV identifier id'>jointPV</span> <span class='assign token'>=</span> <span class='time identifier id'>time</span> <span class='assign token'>=</span> <span class='payment identifier id'>payment</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
   <span class='age identifier id'>age</span> <span class='assign token'>=</span> <span class='immAge identifier id'>immAge</span>
   <span class='dAge identifier id'>dAge</span> <span class='assign token'>=</span> <span class='defAge identifier id'>defAge</span>
-  <span class='lxZero identifier id'>lxZero</span><span class='comma token'>,</span> <span class='lxZeroSpouse identifier id'>lxZeroSpouse</span> <span class='assign token'>=</span> <span class='LX_ZERO constant id'>LX_ZERO</span>
+  <span class='lxZero identifier id'>lxZero</span> <span class='assign token'>=</span> <span class='lxZeroSpouse identifier id'>lxZeroSpouse</span> <span class='assign token'>=</span> <span class='LX_ZERO constant id'>LX_ZERO</span>
   <span class='sAge identifier id'>sAge</span> <span class='assign token'>=</span> <span class='spouseAge identifier id'>spouseAge</span>
   <span class='jointCalc identifier id'>jointCalc</span> <span class='assign token'>=</span> <span class='js_type identifier id'>js_type</span>
  
@@ -1224,124 +531,6 @@ version 1.0.0
   
   <span class='round_factor identifier id'>round_factor</span><span class='lparen token'>(</span><span class='returnValue identifier id'>returnValue</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='rparen token'>)</span>
  
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
-  <h3>calculate_qx</h3>
-</div><div id="calculate_qx-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_qx</span><span class='args'>(age)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Retrieves the q(x) from the appropriate mortality table.
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small></small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;calculate_qx(55.0)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-q(x)
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="todo">
-  <h3>Todo Item:</h3>
-  <ul>
-  
-    <li><strong>Add in additional mortality table support</strong> </li>
-  
-  </ul>
-</div><div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 135</span>
-
-<span class='def def kw'>def</span> <span class='calculate_qx identifier id'>calculate_qx</span><span class='lparen token'>(</span><span class='age identifier id'>age</span><span class='rparen token'>)</span>
-  <span class='age identifier id'>age</span> <span class='assign token'>=</span> <span class='age identifier id'>age</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span>
-  <span class='max_age identifier id'>max_age</span> <span class='assign token'>=</span> <span class='PPA2009 constant id'>PPA2009</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span>
-  <span class='if if kw'>if</span> <span class='age identifier id'>age</span> <span class='gt op'>&gt;</span> <span class='max_age identifier id'>max_age</span>
-    <span class='PPA2009 constant id'>PPA2009</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
-  <span class='else else kw'>else</span>
-    <span class='PPA2009 constant id'>PPA2009</span><span class='lbrack token'>[</span><span class='age identifier id'>age</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span>
-  <span class='end end kw'>end</span>
 <span class='end end kw'>end</span>
 </pre>
         </td>
@@ -1706,6 +895,48 @@ version 1.0.0
           <pre class="lines">
 
 
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
 200
 201
 202
@@ -1736,52 +967,10 @@ version 1.0.0
 227
 228
 229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264
-265
-266
-267
-268
-269
-270
-271
-272</pre>
+230</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 200</span>
+          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 158</span>
 
 <span class='def def kw'>def</span> <span class='generate_factor identifier id'>generate_factor</span><span class='lparen token'>(</span><span class='immediateAge identifier id'>immediateAge</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='commencementAge identifier id'>commencementAge</span><span class='assign token'>=</span><span class='float val'>65.0</span><span class='comma token'>,</span><span class='spAge identifier id'>spAge</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span>
                     <span class='jsType identifier id'>jsType</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='jsPct identifier id'>jsPct</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='assign token'>=</span><span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2009 constant id'>PPA2009</span><span class='comma token'>,</span>
@@ -1865,182 +1054,13 @@ version 1.0.0
 </div>
     </div>
   
-    <div class="method">
-      <div class="method_header">
-  <h3>unit_payment</h3>
-</div><div id="unit_payment-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'><tt>float</tt></span>
-      <span class='name'>unit_payment</span><span class='args'>(mort_disc, interest, numberOfMonths, payment)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Calculates a single unit payment given a nPx, interest rate, time elapsed
-and what period is being payed.
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="examples">
-  
-    <h3>Example: <small></small></h3>
-    <div class="docstring">
-      <pre class="code"><span class='string val'>&quot;unit_payment(0.99832,0.0544,12,0.833....)&quot;</span>
-</pre>
-    </div>
-  
-</div>
-<div class="param">
-  <h3>Parameters:</h3>
-  <dl>
-  
-    
-      <dt>
-        <span class='type'>[<tt>float</tt>]</span>
-        <span class='name'>mort_disc</span>
-        
-      </dt>
-      <dd>
-        <span class='desc'><ul>
-<li>nPx at given time.
-
-</li>
-</ul>
-</span>
-      </dd>
-    
-  
-    
-      <dt>
-        <span class='type'>[<tt>float</tt>]</span>
-        <span class='name'>interest</span>
-        
-      </dt>
-      <dd>
-        <span class='desc'><ul>
-<li>applicable interest rate
-
-</li>
-</ul>
-</span>
-      </dd>
-    
-  
-    
-      <dt>
-        <span class='type'>[<tt>float</tt>]</span>
-        <span class='name'>numberOfMonths</span>
-        
-      </dt>
-      <dd>
-        <span class='desc'><ul>
-<li>the specific point in time for the calculation.
-
-</li>
-</ul>
-</span>
-      </dd>
-    
-  
-    
-      <dt>
-        <span class='type'>[<tt>float</tt>]</span>
-        <span class='name'>payment</span>
-        
-      </dt>
-      <dd>
-        <span class='desc'><ul>
-<li>The amount being paid (1/12 or 0)
-
-</li>
-</ul>
-</span>
-      </dd>
-    
-  
-  </dl>
-</div><div class="return">
-  <h3>Returns:</h3>
-  <dl>
-  
-    <dt>
-      
-        <span class='type'>[<tt>float</tt>]</span>
-      
-      
-        <span class='name'></span>
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-Unit payment.
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-<div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.0.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-162
-163
-164</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 162</span>
-
-<span class='def def kw'>def</span> <span class='unit_payment identifier id'>unit_payment</span><span class='lparen token'>(</span><span class='mort_disc identifier id'>mort_disc</span><span class='comma token'>,</span> <span class='interest identifier id'>interest</span><span class='comma token'>,</span> <span class='numberOfMonths identifier id'>numberOfMonths</span><span class='comma token'>,</span><span class='payment identifier id'>payment</span><span class='rparen token'>)</span>
-  <span class='lparen token'>(</span><span class='mort_disc identifier id'>mort_disc</span> <span class='mult op'>*</span> <span class='payment identifier id'>payment</span><span class='rparen token'>)</span> <span class='div op'>/</span> <span class='lparen token'>(</span><span class='lparen token'>(</span><span class='float val'>1.0</span> <span class='plus op'>+</span> <span class='interest identifier id'>interest</span><span class='rparen token'>)</span> <span class='pow op'>**</span> <span class='lparen token'>(</span><span class='numberOfMonths identifier id'>numberOfMonths</span> <span class='div op'>/</span> <span class='float val'>12.0</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
 </div>
   </div>
 
 </div>
     </div>
     <div id="yard_info">
-  Generated on Wednesday, September 09 2009 at 07:28:55 PM by 
+  Generated on Thursday, September 10 2009 at 05:16:53 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>
