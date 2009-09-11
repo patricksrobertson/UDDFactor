@@ -14,6 +14,12 @@ UDDFactor is a ruby plugin designed to calculate factors using the PPA mandated 
 
 Currently, it only supports PPA2009-PPA2013 mortalities.  Feel free to add new ones!
 
+INSTALLATION
+------------
+
+in the main directory of your rails app type
+	script/plugin add git://github.com/jbcplatter/UDDFactor.git
+
 
 EXAMPLES
 --------
