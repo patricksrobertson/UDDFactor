@@ -120,6 +120,12 @@ class UDDFactorTest < Test::Unit::TestCase
     assert_equal factor, "Rounding cannot be converted into a number"
   end  
   
+  def test_default_imm
+    #testing for defaulting immediate age
+    factor = UDDFactor.generate_factor("",65.0,0.0,0.0,0.0,MortalityTable::PPA2009,5.24,5.69,5.37,0.0,0.0,12.0)
+    assert_equal factor, 11.435594641924
+  end  
+  
   def default_test
       assert true
   end  

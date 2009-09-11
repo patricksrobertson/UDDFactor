@@ -70,15 +70,12 @@ module GenFactor
 	  if nil == inVariable
 		  default
 	  else	
-		  begin
 			  if inVariable.empty?
 				  default
+			  else 
+			    inVariable
 			  end
-		  rescue
-			  inVariable
-		  end
 	  end
-	  inVariable
   end 
   
   ##
@@ -281,5 +278,7 @@ module GenFactor
     error.empty? ? error = msg : error << "\n" + msg + " "
     error
   end  
- 
+  def method_missing(method,*args)
+    false
+  end
 end
