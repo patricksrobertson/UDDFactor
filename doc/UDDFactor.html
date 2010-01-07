@@ -31,7 +31,7 @@
       <th class="signature">
         
           <span class='overload'>
-            <span class='name'><a title="#calculate_present_value" href="#calculate_present_value-instance_method">#calculate_present_value</a></span><span class='args'>(immAge, defAge, spouseAge, js_type, js_pct, mortality, seg1, seg2, seg3, certain, temp, rounding)</span>
+            <span class='name'><a title="#calculate_present_value" href="#calculate_present_value-instance_method">#calculate_present_value</a></span><span class='args'>(immAge, defAge, spouseAge, js_type, js_pct, mortality, seg1, seg2, seg3, certain, temp, rounding, spMortality)</span>
             <span class='block'></span>
           </span>
         
@@ -58,7 +58,7 @@ factor.
       <th class="signature">
         
           <span class='overload'>
-            <span class='name'><a title="#generate_factor" href="#generate_factor-instance_method">#generate_factor</a></span><span class='args'>(immediateAge = 0.0, commencementAge = 65.0, spAge = 0.0, jsType = 0.0, jsPct = 0.0, mortality = MortalityTable::PPA2009, intSegmentA = 5.0, intSegmentB = 0.0, intSegmentC = 0.0, certainPeriod = 0.0, tempPeriod = 0.0, rounding = 12.0, outputType = 0.0)</span>
+            <span class='name'><a title="#generate_factor" href="#generate_factor-instance_method">#generate_factor</a></span><span class='args'>(immediateAge = 0.0, commencementAge = 65.0, spAge = 0.0, jsType = 0.0, jsPct = 0.0, mortality = MortalityTable::PPA2009, intSegmentA = 5.0, intSegmentB = 0.0, intSegmentC = 0.0, certainPeriod = 0.0, tempPeriod = 0.0, rounding = 12.0, outputType = 0.0, spMortality = nil)</span>
             <span class='block'></span>
           </span>
         
@@ -103,7 +103,7 @@ Validates input parameters then generates a Present Value Factor.
     <tt class='def'>
       <span class='visibility'>public</span>
       <span class='return_types'><tt>float</tt></span>
-      <span class='name'>calculate_present_value</span><span class='args'>(immAge, defAge, spouseAge, js_type, js_pct, mortality, seg1, seg2, seg3, certain, temp, rounding)</span>
+      <span class='name'>calculate_present_value</span><span class='args'>(immAge, defAge, spouseAge, js_type, js_pct, mortality, seg1, seg2, seg3, certain, temp, rounding, spMortality)</span>
       <span class='block'></span>
     </tt>
   </div>
@@ -324,6 +324,22 @@ payments will be calculated.
       </dd>
     
   
+    
+      <dt>
+        <span class='type'>[<tt>Array</tt>]</span>
+        <span class='name'>spMortality</span>
+        
+      </dt>
+      <dd>
+        <span class='desc'><ul>
+<li>Mortality table for the q(x) lookup for the secondary beneficiary.
+
+</li>
+</ul>
+</span>
+      </dd>
+    
+  
   </dl>
 </div><div class="return">
   <h3>Returns:</h3>
@@ -382,7 +398,6 @@ version 1.0.0
           <pre class="lines">
 
 
-41
 42
 43
 44
@@ -462,12 +477,17 @@ version 1.0.0
 118
 119
 120
-121</pre>
+121
+122
+123
+124</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 41</span>
+          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 42</span>
 
-<span class='def def kw'>def</span> <span class='calculate_present_value identifier id'>calculate_present_value</span><span class='lparen token'>(</span><span class='immAge identifier id'>immAge</span><span class='comma token'>,</span><span class='defAge identifier id'>defAge</span><span class='comma token'>,</span><span class='spouseAge identifier id'>spouseAge</span><span class='comma token'>,</span><span class='js_type identifier id'>js_type</span><span class='comma token'>,</span><span class='js_pct identifier id'>js_pct</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='comma token'>,</span><span class='seg1 identifier id'>seg1</span><span class='comma token'>,</span><span class='seg2 identifier id'>seg2</span><span class='comma token'>,</span><span class='seg3 identifier id'>seg3</span><span class='comma token'>,</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='temp identifier id'>temp</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='rparen token'>)</span>
+<span class='def def kw'>def</span> <span class='calculate_present_value identifier id'>calculate_present_value</span><span class='lparen token'>(</span><span class='immAge identifier id'>immAge</span><span class='comma token'>,</span><span class='defAge identifier id'>defAge</span><span class='comma token'>,</span><span class='spouseAge identifier id'>spouseAge</span><span class='comma token'>,</span><span class='js_type identifier id'>js_type</span><span class='comma token'>,</span><span class='js_pct identifier id'>js_pct</span><span class='comma token'>,</span>
+                            <span class='mortality identifier id'>mortality</span><span class='comma token'>,</span><span class='seg1 identifier id'>seg1</span><span class='comma token'>,</span><span class='seg2 identifier id'>seg2</span><span class='comma token'>,</span><span class='seg3 identifier id'>seg3</span><span class='comma token'>,</span><span class='certain identifier id'>certain</span><span class='comma token'>,</span><span class='temp identifier id'>temp</span><span class='comma token'>,</span>
+                            <span class='rounding identifier id'>rounding</span><span class='comma token'>,</span><span class='spMortality identifier id'>spMortality</span><span class='rparen token'>)</span>
   <span class='returnValue identifier id'>returnValue</span> <span class='assign token'>=</span> <span class='singlePV identifier id'>singlePV</span> <span class='assign token'>=</span> <span class='spousePV identifier id'>spousePV</span> <span class='assign token'>=</span> <span class='jointPV identifier id'>jointPV</span> <span class='assign token'>=</span> <span class='time identifier id'>time</span> <span class='assign token'>=</span> <span class='payment identifier id'>payment</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
   <span class='age identifier id'>age</span> <span class='assign token'>=</span> <span class='immAge identifier id'>immAge</span>
   <span class='dAge identifier id'>dAge</span> <span class='assign token'>=</span> <span class='defAge identifier id'>defAge</span>
@@ -481,7 +501,7 @@ version 1.0.0
   <span class='lXSpouse identifier id'>lXSpouse</span> <span class='assign token'>=</span> <span class='lxZeroSpouse identifier id'>lxZeroSpouse</span>
  
   <span class='dX identifier id'>dX</span> <span class='assign token'>=</span> <span class='calculate_dx identifier id'>calculate_dx</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='lX identifier id'>lX</span><span class='comma token'>,</span><span class='age identifier id'>age</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='rparen token'>)</span>
-  <span class='dXSpouse identifier id'>dXSpouse</span> <span class='assign token'>=</span> <span class='calculate_dx identifier id'>calculate_dx</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='lXSpouse identifier id'>lXSpouse</span><span class='comma token'>,</span><span class='sAge identifier id'>sAge</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='rparen token'>)</span>
+  <span class='dXSpouse identifier id'>dXSpouse</span> <span class='assign token'>=</span> <span class='calculate_dx identifier id'>calculate_dx</span><span class='lparen token'>(</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='lXSpouse identifier id'>lXSpouse</span><span class='comma token'>,</span><span class='sAge identifier id'>sAge</span><span class='dot token'>.</span><span class='truncate identifier id'>truncate</span><span class='comma token'>,</span><span class='spMortality identifier id'>spMortality</span><span class='rparen token'>)</span>
  
   <span class='lX identifier id'>lX</span> <span class='assign token'>=</span> <span class='calculate_initial_lx identifier id'>calculate_initial_lx</span><span class='lparen token'>(</span><span class='lX identifier id'>lX</span><span class='comma token'>,</span><span class='dX identifier id'>dX</span><span class='comma token'>,</span><span class='age identifier id'>age</span><span class='rparen token'>)</span>
   <span class='lxZero identifier id'>lxZero</span> <span class='assign token'>=</span> <span class='lX identifier id'>lX</span>
@@ -566,7 +586,7 @@ version 1.0.0
     <tt class='def'>
       <span class='visibility'>public</span>
       <span class='return_types'><tt>float</tt></span>
-      <span class='name'>generate_factor</span><span class='args'>(immediateAge = 0.0, commencementAge = 65.0, spAge = 0.0, jsType = 0.0, jsPct = 0.0, mortality = MortalityTable::PPA2009, intSegmentA = 5.0, intSegmentB = 0.0, intSegmentC = 0.0, certainPeriod = 0.0, tempPeriod = 0.0, rounding = 12.0, outputType = 0.0)</span>
+      <span class='name'>generate_factor</span><span class='args'>(immediateAge = 0.0, commencementAge = 65.0, spAge = 0.0, jsType = 0.0, jsPct = 0.0, mortality = MortalityTable::PPA2009, intSegmentA = 5.0, intSegmentB = 0.0, intSegmentC = 0.0, certainPeriod = 0.0, tempPeriod = 0.0, rounding = 12.0, outputType = 0.0, spMortality = nil)</span>
       <span class='block'></span>
     </tt>
   </div>
@@ -802,6 +822,23 @@ running the <tt><a title="#calculate_present_value" href="#calculate_present_val
       </dd>
     
   
+    
+      <dt>
+        <span class='type'>[<tt>Array</tt>]</span>
+        <span class='name'>spMortality</span>
+        
+      </dt>
+      <dd>
+        <span class='desc'><ul>
+<li>Mortality table to fetch q(x) from for the secondary beneficiary. Defaults
+to the primary mortality table.
+
+</li>
+</ul>
+</span>
+      </dd>
+    
+  
   </dl>
 </div><div class="return">
   <h3>Returns:</h3>
@@ -911,11 +948,6 @@ version 1.0.0
           <pre class="lines">
 
 
-159
-160
-161
-162
-163
 164
 165
 166
@@ -1053,15 +1085,21 @@ version 1.0.0
 298
 299
 300
-301</pre>
+301
+302
+303
+304
+305
+306
+307</pre>
         </td>
         <td>
-          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 159</span>
+          <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 164</span>
 
 <span class='def def kw'>def</span> <span class='generate_factor identifier id'>generate_factor</span><span class='lparen token'>(</span><span class='immediateAge identifier id'>immediateAge</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='commencementAge identifier id'>commencementAge</span><span class='assign token'>=</span><span class='float val'>65.0</span><span class='comma token'>,</span><span class='spAge identifier id'>spAge</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span>
                     <span class='jsType identifier id'>jsType</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='jsPct identifier id'>jsPct</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='assign token'>=</span><span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2009 constant id'>PPA2009</span><span class='comma token'>,</span>
                     <span class='intSegmentA identifier id'>intSegmentA</span><span class='assign token'>=</span><span class='float val'>5.0</span><span class='comma token'>,</span><span class='intSegmentB identifier id'>intSegmentB</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='intSegmentC identifier id'>intSegmentC</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='certainPeriod identifier id'>certainPeriod</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span>
-                    <span class='tempPeriod identifier id'>tempPeriod</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='assign token'>=</span><span class='float val'>12.0</span><span class='comma token'>,</span><span class='outputType identifier id'>outputType</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
+                    <span class='tempPeriod identifier id'>tempPeriod</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='assign token'>=</span><span class='float val'>12.0</span><span class='comma token'>,</span><span class='outputType identifier id'>outputType</span><span class='assign token'>=</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='comma token'>,</span><span class='spMortality identifier id'>spMortality</span><span class='assign token'>=</span><span class='nil nil kw'>nil</span><span class='rparen token'>)</span>
   <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='lbrack token'>[</span><span class='rbrack token'>]</span>
   <span class='immediateCalculation identifier id'>immediateCalculation</span><span class='comma token'>,</span> <span class='jointCalculation identifier id'>jointCalculation</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
  
@@ -1071,6 +1109,7 @@ version 1.0.0
   <span class='jsType identifier id'>jsType</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='jsType identifier id'>jsType</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
   <span class='jsPct identifier id'>jsPct</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='jsPct identifier id'>jsPct</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
   <span class='mortality identifier id'>mortality</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='comma token'>,</span><span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2009 constant id'>PPA2009</span><span class='rparen token'>)</span>
+  <span class='spMortality identifier id'>spMortality</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='spMortality identifier id'>spMortality</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='rparen token'>)</span>
   <span class='intSegmentB identifier id'>intSegmentB</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='intSegmentB identifier id'>intSegmentB</span><span class='comma token'>,</span><span class='intSegmentA identifier id'>intSegmentA</span><span class='rparen token'>)</span>
   <span class='intSegmentC identifier id'>intSegmentC</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='intSegmentC identifier id'>intSegmentC</span><span class='comma token'>,</span><span class='intSegmentA identifier id'>intSegmentA</span><span class='rparen token'>)</span>
   <span class='certainPeriod identifier id'>certainPeriod</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='certainPeriod identifier id'>certainPeriod</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
@@ -1192,7 +1231,7 @@ version 1.0.0
     <span class='if if kw'>if</span> <span class='integer val'>0</span> <span class='eq op'>==</span> <span class='outputType identifier id'>outputType</span>
       <span class='calculate_present_value identifier id'>calculate_present_value</span><span class='lparen token'>(</span><span class='immediateAge identifier id'>immediateAge</span><span class='comma token'>,</span><span class='commencementAge identifier id'>commencementAge</span><span class='comma token'>,</span><span class='spAge identifier id'>spAge</span><span class='comma token'>,</span><span class='jsType identifier id'>jsType</span><span class='comma token'>,</span><span class='jsPct identifier id'>jsPct</span><span class='comma token'>,</span><span class='mortality identifier id'>mortality</span><span class='comma token'>,</span>
                               <span class='intSegmentA identifier id'>intSegmentA</span><span class='comma token'>,</span><span class='intSegmentB identifier id'>intSegmentB</span><span class='comma token'>,</span><span class='intSegmentC identifier id'>intSegmentC</span><span class='comma token'>,</span><span class='certainPeriod identifier id'>certainPeriod</span><span class='comma token'>,</span>
-                              <span class='tempPeriod identifier id'>tempPeriod</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='rparen token'>)</span>
+                              <span class='tempPeriod identifier id'>tempPeriod</span><span class='comma token'>,</span><span class='rounding identifier id'>rounding</span><span class='comma token'>,</span><span class='spMortality identifier id'>spMortality</span><span class='rparen token'>)</span>
     <span class='else else kw'>else</span>
       <span class='true true kw'>true</span>
     <span class='end end kw'>end</span> <span class='comment val'>#if outputType is 0</span>
@@ -1216,7 +1255,7 @@ version 1.0.0
 </div>
     </div>
     <div id="yard_info">
-  Generated on Friday, September 11 2009 at 02:54:16 PM by 
+  Generated on Thursday, January 07 2010 at 12:25:50 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>
