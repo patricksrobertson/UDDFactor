@@ -17,7 +17,7 @@ Currently, it only supports PPA2009-PPA2013 mortalities.  Feel free to add new o
 INSTALLATION
 ------------
 
-in the main directory of your rails app type
+in the main directory of your rails app type:
 	script/plugin add git://github.com/jbcplatter/UDDFactor.git
 
 

@@ -28,6 +28,7 @@ include MortalityTable
   # @param temp - Temporary Period: The number of years years after the commencement age 
   #                       the payments will be calculated.
   # @param rounding - Rounding: The number of significant figures to round.
+  # @param [Array] spMortality - Mortality table for the q(x) lookup for the secondary beneficiary.
   #
   # @return [float] Present Value Factor
   #
@@ -38,7 +39,9 @@ include MortalityTable
   #
   # @since version 1.0.0
   ##
-  def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,mortality,seg1,seg2,seg3,certain,temp,rounding)
+  def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,
+                              mortality,seg1,seg2,seg3,certain,temp,
+                              rounding,spMortality)
     returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
     age = immAge
     dAge = defAge
@@ -52,7 +55,7 @@ include MortalityTable
     lXSpouse = lxZeroSpouse
  
     dX = calculate_dx(0.0,lX,age.truncate,mortality)
-    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,mortality)
+    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,spMortality)
  
     lX = calculate_initial_lx(lX,dX,age)
     lxZero = lX
@@ -143,6 +146,8 @@ include MortalityTable
   # @param [nil,float] outputType - If set to 0, runs a factor as normal.  Anything else is validation mode.
   #                               Validation mode runs the checks, and outputs the error message without
   #                               running the {#calculate_present_value} method.
+  # @param [Array] spMortality - Mortality table to fetch q(x) from for the secondary beneficiary.  Defaults 
+  #                             to the primary mortality table.
   #
   # @raise [InvalidFloat] if any input parameter cannot be converted to a float, it will produce an error.
   # @raise [DefTemp] if immediateAge < commencementAge and tempPeriod > 0, will throw an error.
@@ -159,7 +164,7 @@ include MortalityTable
   def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
 	                    jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
 	                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
-	                    tempPeriod=0.0,rounding=12.0,outputType=0.0)
+	                    tempPeriod=0.0,rounding=12.0,outputType=0.0,spMortality=nil)
 	  errors = []
 	  immediateCalculation, jointCalculation = 0.0
  
@@ -169,6 +174,7 @@ include MortalityTable
 	  jsType = GenFactor::set_default(jsType,0.0)
 	  jsPct = GenFactor::set_default(jsPct,0.0)
 	  mortality = GenFactor::set_default(mortality,MortalityTable::PPA2009)
+	  spMortality = GenFactor::set_default(spMortality,mortality)
 	  intSegmentB = GenFactor::set_default(intSegmentB,intSegmentA)
 	  intSegmentC = GenFactor::set_default(intSegmentC,intSegmentA)
 	  certainPeriod = GenFactor::set_default(certainPeriod,0.0)
@@ -290,7 +296,7 @@ include MortalityTable
 		  if 0 == outputType
 			  calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,mortality,
 											          intSegmentA,intSegmentB,intSegmentC,certainPeriod,
-											          tempPeriod,rounding)
+											          tempPeriod,rounding,spMortality)
 		  else
 			  true
 		  end #if outputType is 0
