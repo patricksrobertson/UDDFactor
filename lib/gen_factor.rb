@@ -281,4 +281,43 @@ module GenFactor
   def method_missing(method,*args)
     false
   end
+  
+  ##
+  # Mortality validation functionality moved to a method since there are
+  # primary and secondary mortality tables in 1.1.0
+  # @since version 1.1.0
+  ##
+  
+  def validate_mortality(mortality,errors,type)  
+		unless mortality.is_a? Array
+		  errorString = type + " Mortality: Mortality Table must be an array"
+		  errors = GenFactor::append_error(errors,errorString)
+		else
+		  cErrorCount = 0.0
+		  mortality.each do |ii|
+		    begin
+		      tempy = ii
+		      tempo = Float(tempy[0])
+		      tempsan = Float(tempy[1])
+		    rescue
+	          cErrorCount += 1.0
+		    end
+	    end
+	    if cErrorCount > 0.0
+	      errorString = type + " Mortality: Invalid mortality table format: cannot convert all elements to numbers"
+        errors = GenFactor::append_error(errors,errorString)
+      else
+        unless (mortality[0][0] == 0.0) and (mortality[0][1] == 0.0)
+          errorString = type + " Mortality: Invalid mortality table format: first row is not 0.0,0.0"
+          errors = GenFactor::append_error(errors,errorString)
+        end
+        unless mortality[-1][1] == 1.0
+          errorString = type + " Mortality: Invalid mortality table format: last row does not have a q(x) of 1.0"
+          errors = GenFactor::append_error(errors,errorString)
+        end        
+      end
+		end
+		errors    
+  end  
+    
 end

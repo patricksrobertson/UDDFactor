@@ -85,7 +85,7 @@ Validates input parameters then generates a Present Value Factor.
   
   <div>
     <h1>Public Instance Methods Included from <a title="GenFactor" href="UDDFactor/GenFactor.html">GenFactor</a></h1>
-    <p><span class='name'><a title="add_month" href="GenFactor.html#add_month-instance_method">add_month</a></span>, <span class='name'><a title="append_error" href="GenFactor.html#append_error-instance_method">append_error</a></span>, <span class='name'><a title="calculate_discount" href="GenFactor.html#calculate_discount-instance_method">calculate_discount</a></span>, <span class='name'><a title="calculate_dx" href="GenFactor.html#calculate_dx-instance_method">calculate_dx</a></span>, <span class='name'><a title="calculate_initial_lx" href="GenFactor.html#calculate_initial_lx-instance_method">calculate_initial_lx</a></span>, <span class='name'><a title="calculate_joint_factor" href="GenFactor.html#calculate_joint_factor-instance_method">calculate_joint_factor</a></span>, <span class='name'><a title="calculate_qx" href="GenFactor.html#calculate_qx-instance_method">calculate_qx</a></span>, <span class='name'><a title="interest_discount" href="GenFactor.html#interest_discount-instance_method">interest_discount</a></span>, <span class='name'><a title="round_factor" href="GenFactor.html#round_factor-instance_method">round_factor</a></span>, <span class='name'><a title="sanitize_age" href="GenFactor.html#sanitize_age-instance_method">sanitize_age</a></span>, <span class='name'><a title="sanitize_interest" href="GenFactor.html#sanitize_interest-instance_method">sanitize_interest</a></span>, <span class='name'><a title="sanitize_js_pct" href="GenFactor.html#sanitize_js_pct-instance_method">sanitize_js_pct</a></span>, <span class='name'><a title="sanitize_js_type" href="GenFactor.html#sanitize_js_type-instance_method">sanitize_js_type</a></span>, <span class='name'><a title="set_default" href="GenFactor.html#set_default-instance_method">set_default</a></span>, <span class='name'><a title="unit_payment" href="GenFactor.html#unit_payment-instance_method">unit_payment</a></span>, <span class='name'><a title="validate_float" href="GenFactor.html#validate_float-instance_method">validate_float</a></span>, <span class='name'><a title="yearly_discount" href="GenFactor.html#yearly_discount-instance_method">yearly_discount</a></span></p>
+    <p><span class='name'><a title="add_month" href="GenFactor.html#add_month-instance_method">add_month</a></span>, <span class='name'><a title="append_error" href="GenFactor.html#append_error-instance_method">append_error</a></span>, <span class='name'><a title="calculate_discount" href="GenFactor.html#calculate_discount-instance_method">calculate_discount</a></span>, <span class='name'><a title="calculate_dx" href="GenFactor.html#calculate_dx-instance_method">calculate_dx</a></span>, <span class='name'><a title="calculate_initial_lx" href="GenFactor.html#calculate_initial_lx-instance_method">calculate_initial_lx</a></span>, <span class='name'><a title="calculate_joint_factor" href="GenFactor.html#calculate_joint_factor-instance_method">calculate_joint_factor</a></span>, <span class='name'><a title="calculate_qx" href="GenFactor.html#calculate_qx-instance_method">calculate_qx</a></span>, <span class='name'><a title="interest_discount" href="GenFactor.html#interest_discount-instance_method">interest_discount</a></span>, <span class='name'><a title="round_factor" href="GenFactor.html#round_factor-instance_method">round_factor</a></span>, <span class='name'><a title="sanitize_age" href="GenFactor.html#sanitize_age-instance_method">sanitize_age</a></span>, <span class='name'><a title="sanitize_interest" href="GenFactor.html#sanitize_interest-instance_method">sanitize_interest</a></span>, <span class='name'><a title="sanitize_js_pct" href="GenFactor.html#sanitize_js_pct-instance_method">sanitize_js_pct</a></span>, <span class='name'><a title="sanitize_js_type" href="GenFactor.html#sanitize_js_type-instance_method">sanitize_js_type</a></span>, <span class='name'><a title="set_default" href="GenFactor.html#set_default-instance_method">set_default</a></span>, <span class='name'><a title="unit_payment" href="GenFactor.html#unit_payment-instance_method">unit_payment</a></span>, <span class='name'><a title="validate_float" href="GenFactor.html#validate_float-instance_method">validate_float</a></span>, <span class='name'><a title="validate_mortality" href="GenFactor.html#validate_mortality-instance_method">validate_mortality</a></span>, <span class='name'><a title="yearly_discount" href="GenFactor.html#yearly_discount-instance_method">yearly_discount</a></span></p>
   </div>
   
 </div>
@@ -1064,34 +1064,7 @@ version 1.0.0
 277
 278
 279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307</pre>
+280</pre>
         </td>
         <td>
           <pre class="code"><span class="info file"># File 'lib/udd_factor.rb', line 164</span>
@@ -1115,7 +1088,7 @@ version 1.0.0
   <span class='certainPeriod identifier id'>certainPeriod</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='certainPeriod identifier id'>certainPeriod</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
   <span class='tempPeriod identifier id'>tempPeriod</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='tempPeriod identifier id'>tempPeriod</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
   <span class='rounding identifier id'>rounding</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='set_default identifier id'>set_default</span><span class='lparen token'>(</span><span class='rounding identifier id'>rounding</span><span class='comma token'>,</span><span class='float val'>12.0</span><span class='rparen token'>)</span>
- 
+  
   <span class='comment val'>#check to make sure we can do the calculation first</span>
   <span class='begin begin kw'>begin</span> 
     <span class='immediateAge identifier id'>immediateAge</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='sanitize_age identifier id'>sanitize_age</span><span class='lparen token'>(</span><span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='immediateAge identifier id'>immediateAge</span><span class='rparen token'>)</span><span class='rparen token'>)</span> 
@@ -1141,35 +1114,8 @@ version 1.0.0
     <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='string val'>&quot;JS Type cannot be converted into a number&quot;</span>   
     <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
   <span class='end end kw'>end</span>
-  <span class='comment val'>#mortality validation time.  </span>
-  <span class='unless unless kw'>unless</span> <span class='mortality identifier id'>mortality</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Array constant id'>Array</span>
-    <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='string val'>&quot;Mortality Table must be an array&quot;</span>
-    <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='cErrorCount identifier id'>cErrorCount</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
-    <span class='mortality identifier id'>mortality</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ii identifier id'>ii</span><span class='bitor op'>|</span>
-      <span class='begin begin kw'>begin</span>
-        <span class='tempy identifier id'>tempy</span> <span class='assign token'>=</span> <span class='ii identifier id'>ii</span>
-        <span class='tempo identifier id'>tempo</span> <span class='assign token'>=</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='tempy identifier id'>tempy</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-        <span class='tempsan identifier id'>tempsan</span> <span class='assign token'>=</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='tempy identifier id'>tempy</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-      <span class='rescue rescue kw'>rescue</span>
-          <span class='cErrorCount identifier id'>cErrorCount</span> <span class='opasgn op'>+=</span> <span class='float val'>1.0</span>
-      <span class='end end kw'>end</span>
-    <span class='end end kw'>end</span>
-    <span class='if if kw'>if</span> <span class='cErrorCount identifier id'>cErrorCount</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
-      <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='string val'>&quot;Invalid mortality table format: cannot convert all elements to numbers&quot;</span>
-      <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span>
-      <span class='unless unless kw'>unless</span> <span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span> <span class='and and kw'>and</span> <span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
-        <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='string val'>&quot;Invalid mortality table format: first row is not 0.0,0.0&quot;</span>
-        <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
-      <span class='unless unless kw'>unless</span> <span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='float val'>1.0</span>
-        <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='string val'>&quot;Invalid mortality table format: last row does not have a q(x) of 1.0&quot;</span>
-        <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>        
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
+  <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='validate_mortality identifier id'>validate_mortality</span><span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='comma token'>,</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='string val'>&quot;Primary&quot;</span><span class='rparen token'>)</span>
+  <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='validate_mortality identifier id'>validate_mortality</span><span class='lparen token'>(</span><span class='spMortality identifier id'>spMortality</span><span class='comma token'>,</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='string val'>&quot;Secondary&quot;</span><span class='rparen token'>)</span>
   <span class='begin begin kw'>begin</span>
     <span class='jsPct identifier id'>jsPct</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='sanitize_js_pct identifier id'>sanitize_js_pct</span><span class='lparen token'>(</span><span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='jsPct identifier id'>jsPct</span><span class='rparen token'>)</span><span class='rparen token'>)</span>
   <span class='rescue rescue kw'>rescue</span>
@@ -1255,7 +1201,7 @@ version 1.0.0
 </div>
     </div>
     <div id="yard_info">
-  Generated on Thursday, January 07 2010 at 12:25:50 PM by 
+  Generated on Friday, January 08 2010 at 05:48:53 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>

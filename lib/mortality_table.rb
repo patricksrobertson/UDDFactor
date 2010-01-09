@@ -7,7 +7,6 @@
 ##
 
 module MortalityTable
-
   PPA2009 = [
     #age    #q
     [0.0,   0.000000],

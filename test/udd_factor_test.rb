@@ -78,28 +78,34 @@ class UDDFactorTest < Test::Unit::TestCase
   def test_mort_type_error
     #testing for an improper mortality type
     factor = UDDFactor.generate_factor(65.0,55.417,0.0,0.0,0.0,"peanut",5.24,5.69,5.37,0.0,5.0,12.0)
-    assert_equal factor, "Mortality Table must be an array"
+    assert_equal factor, "Primary Mortality: Mortality Table must be an array"+ "\n" + 
+                          "Secondary Mortality: Mortality Table must be an array "
   end  
   
   def test_mort_array_settings
     #testing whether the array has at least two columns, elements are all floats
     test_array = [ [0.0, 0.0],['cap','trade']]
     factor = UDDFactor.generate_factor(65.0,55.417,0.0,0.0,0.0,test_array,5.24,5.69,5.37,0.0,5.0,12.0)
-    assert_equal factor, "Invalid mortality table format: cannot convert all elements to numbers"
+    assert_equal factor, "Primary Mortality: Invalid mortality table format: cannot convert all elements to numbers" +
+                          "\n" +
+                          "Secondary Mortality: Invalid mortality table format: cannot convert all elements to numbers "
   end
   
   def test_mort_array_first
     #testing whether the array's first row is 0.0,0.0
     test_array = [ [0.0, 0.435],[2.0,1.0]]
     factor = UDDFactor.generate_factor(65.0,55.417,0.0,0.0,0.0,test_array,5.24,5.69,5.37,0.0,5.0,12.0)
-    assert_equal factor, "Invalid mortality table format: first row is not 0.0,0.0"
+    assert_equal factor, "Primary Mortality: Invalid mortality table format: first row is not 0.0,0.0" + "\n" +
+                         "Secondary Mortality: Invalid mortality table format: first row is not 0.0,0.0 "
   end  
   
   def test_mort_array_last
     #testing whether the array's last row has a q(x) of 1.0
     test_array = [ [0.0, 0.000],[1.0, 0.035]]
     factor = UDDFactor.generate_factor(65.0,55.417,0.0,0.0,0.0,test_array,5.24,5.69,5.37,0.0,5.0,12.0)
-    assert_equal factor, "Invalid mortality table format: last row does not have a q(x) of 1.0"
+    assert_equal factor, "Primary Mortality: Invalid mortality table format: last row does not have a q(x) of 1.0" + 
+                         "\n" +
+                         "Secondary Mortality: Invalid mortality table format: last row does not have a q(x) of 1.0 "
   end  
   
   def test_js_pct_error

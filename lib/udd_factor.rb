@@ -180,7 +180,7 @@ include MortalityTable
 	  certainPeriod = GenFactor::set_default(certainPeriod,0.0)
 	  tempPeriod = GenFactor::set_default(tempPeriod,0.0)
 	  rounding = GenFactor::set_default(rounding,12.0)
- 
+	  
 	  #check to make sure we can do the calculation first
 	  begin 
 	    immediateAge = GenFactor::sanitize_age(Float(immediateAge)) 
@@ -206,35 +206,8 @@ include MortalityTable
 		  errorString = "JS Type cannot be converted into a number"		
 		  errors = GenFactor::append_error(errors,errorString)
 		end
-		#mortality validation time.  
-		unless mortality.is_a? Array
-		  errorString = "Mortality Table must be an array"
-		  errors = GenFactor::append_error(errors,errorString)
-		else
-		  cErrorCount = 0.0
-		  mortality.each do |ii|
-		    begin
-		      tempy = ii
-		      tempo = Float(tempy[0])
-		      tempsan = Float(tempy[1])
-		    rescue
-	          cErrorCount += 1.0
-		    end
-	    end
-	    if cErrorCount > 0.0
-	      errorString = "Invalid mortality table format: cannot convert all elements to numbers"
-        errors = GenFactor::append_error(errors,errorString)
-      else
-        unless (mortality[0][0] == 0.0) and (mortality[0][1] == 0.0)
-          errorString = "Invalid mortality table format: first row is not 0.0,0.0"
-          errors = GenFactor::append_error(errors,errorString)
-        end
-        unless mortality[-1][1] == 1.0
-          errorString = "Invalid mortality table format: last row does not have a q(x) of 1.0"
-          errors = GenFactor::append_error(errors,errorString)
-        end        
-      end
-		end
+    errors = MortalityTable::validate_mortality(mortality,errors,"Primary")
+    errors = MortalityTable::validate_mortality(spMortality,errors,"Secondary")
 		begin
 		  jsPct = GenFactor::sanitize_js_pct(Float(jsPct))
 		rescue
