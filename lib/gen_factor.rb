@@ -35,7 +35,8 @@ module GenFactor
   # @since version 1.0.0
   ##
   def round_factor(factor,sigFigs)
-	  (factor * (10.0**sigFigs)).round / (10.0**sigFigs)
+    radix = (10.0**sigFigs)
+	  (factor * radix).round / radix
   end 
   
   ##
@@ -172,8 +173,9 @@ module GenFactor
   # @since 1.0.0
   ##
   def calculate_initial_lx(inLX,inDX,age)
-    if age != age.truncate
-      monthsProrate = ((age - age.truncate) * 12.0).round
+    truncatedAge = age.truncate
+    if age != truncatedAge
+      monthsProrate = ((age - truncatedAge) * 12.0).round
       inLX - (inDX * monthsProrate)
     else
       inLX

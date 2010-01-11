@@ -1,4 +1,4 @@
-UDDFactor Release 1.1.0 (January 8th 2010)
+UDDFactor Release 1.2.0 (January 10th 2010)
 ============================================
 
 **Homepage**: [http://github.com/jbplatter](http://github.com/jbcplatter)

@@ -39,9 +39,25 @@ include MortalityTable
   #
   # @since version 1.0.0
   ##
-  def calculate_present_value(immAge,defAge,spouseAge,js_type,js_pct,
-                              mortality,seg1,seg2,seg3,certain,temp,
-                              rounding,spMortality)
+  def calculate_present_value(ages,rates,periods,mortality,spMortality)
+    
+    #first load the age parameters in
+    immAge = ages[0]
+    defAge = ages[1]
+    spouseAge = ages[2]
+    js_type = ages[3]
+    js_pct = ages[4]
+    
+    #now the interest rates
+    seg1 = rates[0]
+    seg2 = rates[1]
+    seg3 = rates[2]
+    
+    #finally the misc functions
+    certain = periods[0]
+    temp = periods[1]
+    rounding = periods[2]
+                                
     returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
     age = immAge
     dAge = defAge
@@ -66,10 +82,15 @@ include MortalityTable
     if 0.0 == lX
       retVal = 0.0 #everyone is already dead yo.
     else
-      while (lX > 0.0) or (lXSpouse > 0.0 and jointCalc > 0.0)
-        if SEGMENT_TWO > (time / 12.0)
+      jointCalculationValid = false
+      if jointCalc > 0.0 and lXSpouse > 0.0 
+        jointCalculationValid = true
+      end
+      while (lX > 0.0) or (jointCalculationValid)
+        monthlyTime = time / 12.0
+        if SEGMENT_TWO > monthlyTime
           interestRate = seg1
-        elsif SEGMENT_THREE > (time / 12.0)
+        elsif SEGMENT_THREE > monthlyTime
           interestRate = seg2
         else
           interestRate = seg3
@@ -87,33 +108,29 @@ include MortalityTable
           end
         end
         
-        singlePV += unit_payment(mortalityDiscount,interestRate,time,payment)
-        if jointCalc > 0.0 and lXSpouse > 0.0
-          spousePV += unit_payment(mortalityDiscountSpouse,interestRate,time,payment)
-          jointPV += unit_payment(mortalityDiscountJoint,interestRate,time,payment)
+        singlePV += GenFactor::unit_payment(mortalityDiscount,interestRate,time,payment)
+        if jointCalc > 0.0
+          sAge = add_month(sAge)
+          if lXSpouse > 0.0
+            spousePV += GenFactor::unit_payment(mortalityDiscountSpouse,interestRate,time,payment)
+            jointPV += GenFactor::unit_payment(mortalityDiscountJoint,interestRate,time,payment)
+          else
+            jointCalculationValid = false
+          end
         end
         
         time += 1.0
         age = add_month(age)
-        if jointCalc > 0.0  
-          sAge = add_month(sAge) 
-        end
  
         lX = lX - dX
         lXSpouse = lXSpouse - dXSpouse
  
         dX = calculate_dx(dX,lX,age,mortality)
         dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge,mortality)
-        if nil != certain
-          if age >= (dAge + certain) || age <= dAge
-            mortalityDiscount = calculate_discount(lX, lxZero)
-            mortalityDiscountSpouse = calculate_discount(lXSpouse,lxZeroSpouse)
+        if ((nil != certain) and age >= (dAge + certain) || age <= dAge) or (nil == certain)
+            mortalityDiscount = GenFactor::calculate_discount(lX, lxZero)
+            mortalityDiscountSpouse = GenFactor::calculate_discount(lXSpouse,lxZeroSpouse)
             mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
-          end
-        else
-          mortalityDiscount = calculate_discount(lX, lxZero)
-          mortalityDiscountSpouse = calculate_discount(lXSpouse,lxZeroSpouse)
-          mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
         end
         
       end #end while 0.0 < lX
@@ -160,26 +177,29 @@ include MortalityTable
   #
   # @since version 1.0.0   
   ##
-  
-  def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
-	                    jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
-	                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
-	                    tempPeriod=0.0,rounding=12.0,outputType=0.0,spMortality=nil)
+  def generate_factor(ages,rates,periods,mortality,spMortality)
+  #def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
+	#                    jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
+	#                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
+	#                    tempPeriod=0.0,rounding=12.0,outputType=0.0,spMortality=nil)
 	  errors = []
 	  immediateCalculation, jointCalculation = 0.0
- 
+  
 	  #set default blank input items
-	  immediateAge = GenFactor::set_default(immediateAge,commencementAge)
-	  spAge = GenFactor::set_default(spAge,0.0)
-	  jsType = GenFactor::set_default(jsType,0.0)
-	  jsPct = GenFactor::set_default(jsPct,0.0)
+	  commencementAge = ages[1]
+	  immediateAge = GenFactor::set_default(ages[0],commencementAge)
+	  spAge = GenFactor::set_default(ages[2],0.0)
+	  jsType = GenFactor::set_default(ages[3],0.0)
+	  jsPct = GenFactor::set_default(ages[4],0.0)
 	  mortality = GenFactor::set_default(mortality,MortalityTable::PPA2009)
 	  spMortality = GenFactor::set_default(spMortality,mortality)
-	  intSegmentB = GenFactor::set_default(intSegmentB,intSegmentA)
-	  intSegmentC = GenFactor::set_default(intSegmentC,intSegmentA)
-	  certainPeriod = GenFactor::set_default(certainPeriod,0.0)
-	  tempPeriod = GenFactor::set_default(tempPeriod,0.0)
-	  rounding = GenFactor::set_default(rounding,12.0)
+	  intSegmentA = rates[0]
+	  intSegmentB = GenFactor::set_default(rates[1],intSegmentA)
+	  intSegmentC = GenFactor::set_default(rates[2],intSegmentA)
+	  certainPeriod = GenFactor::set_default(periods[0],0.0)
+	  tempPeriod = GenFactor::set_default(periods[1],0.0)
+	  rounding = GenFactor::set_default(periods[2],12.0)
+	  outputType = GenFactor::set_default(periods[3],0.0)
 	  
 	  #check to make sure we can do the calculation first
 	  begin 
@@ -267,9 +287,10 @@ include MortalityTable
 	  
 	  if errors.empty?
 		  if 0 == outputType
-			  calculate_present_value(immediateAge,commencementAge,spAge,jsType,jsPct,mortality,
-											          intSegmentA,intSegmentB,intSegmentC,certainPeriod,
-											          tempPeriod,rounding,spMortality)
+			  calculate_present_value([immediateAge,commencementAge,spAge,jsType,jsPct],
+											          [intSegmentA,intSegmentB,intSegmentC],
+											          [certainPeriod,tempPeriod,rounding],
+			                          mortality,spMortality)
 		  else
 			  true
 		  end #if outputType is 0
