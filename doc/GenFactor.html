@@ -64,7 +64,7 @@ Adds a month and then rounds to the nearest month.
       <th class="signature">
         
           <span class='overload'>
-            <span class='name'><a title="#append_error" href="#append_error-instance_method">#append_error</a></span><span class='args'>(error, msg)</span>
+            <span class='name'><a title="#append_error" href="#append_error-instance_method">#append_error</a></span><span class='args'>(msg)</span>
             <span class='block'></span>
           </span>
         
@@ -401,26 +401,6 @@ Checks to see if the incoming variable can be converted to float.
       <th class="signature">
         
           <span class='overload'>
-            <span class='name'><a title="#validate_mortality" href="#validate_mortality-instance_method">#validate_mortality</a></span><span class='args'>(mortality, errors, type)</span>
-            <span class='block'></span>
-          </span>
-        
-        
-      </th>
-      <td class="docstring">
-        <p>
-Mortality validation functionality moved to a method since there are
-primary and secondary mortality tables in 1.
-</p>
-
-        
-      </td>
-    </tr>
-  
-    <tr>
-      <th class="signature">
-        
-          <span class='overload'>
             <span class='name'><a title="#yearly_discount" href="#yearly_discount-instance_method">#yearly_discount</a></span><span class='args'>(int_disc)</span>
             <span class='block'></span>
           </span>
@@ -498,7 +478,7 @@ Adds a month and then rounds to the nearest month.
     <tt class='def'>
       <span class='visibility'>public</span>
       <span class='return_types'></span>
-      <span class='name'>append_error</span><span class='args'>(error, msg)</span>
+      <span class='name'>append_error</span><span class='args'>(msg)</span>
       <span class='block'></span>
     </tt>
   </div>
@@ -540,15 +520,13 @@ version 1.0.1
 
 279
 280
-281
-282</pre>
+281</pre>
         </td>
         <td>
           <pre class="code"><span class="info file"># File 'lib/gen_factor.rb', line 279</span>
 
-<span class='def def kw'>def</span> <span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='error identifier id'>error</span><span class='comma token'>,</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span>
-  <span class='error identifier id'>error</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='error identifier id'>error</span> <span class='assign token'>=</span> <span class='msg identifier id'>msg</span> <span class='colon op'>:</span> <span class='error identifier id'>error</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;\n&quot;</span> <span class='plus op'>+</span> <span class='msg identifier id'>msg</span> <span class='plus op'>+</span> <span class='string val'>&quot; &quot;</span>
-  <span class='error identifier id'>error</span>
+<span class='def def kw'>def</span> <span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='msg identifier id'>msg</span><span class='rparen token'>)</span>
+  <span class='@errors ivar id'>@errors</span><span class='dot token'>.</span><span class='empty? fid id'>empty?</span> <span class='integer val'>? </span><span class='@errors ivar id'>@errors</span> <span class='assign token'>=</span> <span class='msg identifier id'>msg</span> <span class='colon op'>:</span> <span class='@errors ivar id'>@errors</span> <span class='lshft op'>&lt;&lt;</span> <span class='string val'>&quot;\n&quot;</span> <span class='plus op'>+</span> <span class='msg identifier id'>msg</span> <span class='plus op'>+</span> <span class='string val'>&quot; &quot;</span>
 <span class='end end kw'>end</span>
 </pre>
         </td>
@@ -1967,131 +1945,6 @@ version 1.0.0
   
     <div class="method">
       <div class="method_header">
-  <h3>validate_mortality</h3>
-</div><div id="validate_mortality-instance_method" class="section method">
-  <div class="details_title">
-    <div class='section methodsignature'>
-    <tt class='def'>
-      <span class='visibility'>public</span>
-      <span class='return_types'></span>
-      <span class='name'>validate_mortality</span><span class='args'>(mortality, errors, type)</span>
-      <span class='block'></span>
-    </tt>
-  </div>
-
-</div><div class="section docstring">
-  <p>
-Mortality validation functionality moved to a method since there are
-primary and secondary mortality tables in 1.1.0
-</p>
-
-</div><div class="section tags">
-  <h2>Meta Tags</h2>
-  <div class="since">
-  <h3>Since:</h3>
-  <dl>
-  
-    <dt>
-      
-      
-      
-    </dt>
-    <dd>
-      <span class='desc'><p>
-version 1.1.0
-</p>
-</span>
-    </dd>
-  
-  </dl>
-</div>
-
-</div><div class="section source">
-  <span>[<a class="source_link" href="#">View source</a>]</span>
-  <div class="source_code">
-    <table>
-      <tr>
-        <td>
-          <pre class="lines">
-
-
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323</pre>
-        </td>
-        <td>
-          <pre class="code"><span class="info file"># File 'lib/gen_factor.rb', line 293</span>
-
-<span class='def def kw'>def</span> <span class='validate_mortality identifier id'>validate_mortality</span><span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='comma token'>,</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='type identifier id'>type</span><span class='rparen token'>)</span>  
-  <span class='unless unless kw'>unless</span> <span class='mortality identifier id'>mortality</span><span class='dot token'>.</span><span class='is_a? fid id'>is_a?</span> <span class='Array constant id'>Array</span>
-    <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='type identifier id'>type</span> <span class='plus op'>+</span> <span class='string val'>&quot; Mortality: Mortality Table must be an array&quot;</span>
-    <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-  <span class='else else kw'>else</span>
-    <span class='cErrorCount identifier id'>cErrorCount</span> <span class='assign token'>=</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
-    <span class='mortality identifier id'>mortality</span><span class='dot token'>.</span><span class='each identifier id'>each</span> <span class='do do kw'>do</span> <span class='bitor op'>|</span><span class='ii identifier id'>ii</span><span class='bitor op'>|</span>
-      <span class='begin begin kw'>begin</span>
-        <span class='tempy identifier id'>tempy</span> <span class='assign token'>=</span> <span class='ii identifier id'>ii</span>
-        <span class='tempo identifier id'>tempo</span> <span class='assign token'>=</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='tempy identifier id'>tempy</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-        <span class='tempsan identifier id'>tempsan</span> <span class='assign token'>=</span> <span class='Float constant id'>Float</span><span class='lparen token'>(</span><span class='tempy identifier id'>tempy</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span><span class='rparen token'>)</span>
-      <span class='rescue rescue kw'>rescue</span>
-          <span class='cErrorCount identifier id'>cErrorCount</span> <span class='opasgn op'>+=</span> <span class='float val'>1.0</span>
-      <span class='end end kw'>end</span>
-    <span class='end end kw'>end</span>
-    <span class='if if kw'>if</span> <span class='cErrorCount identifier id'>cErrorCount</span> <span class='gt op'>&gt;</span> <span class='integer val'>0</span><span class='integer val'>.0</span>
-      <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='type identifier id'>type</span> <span class='plus op'>+</span> <span class='string val'>&quot; Mortality: Invalid mortality table format: cannot convert all elements to numbers&quot;</span>
-      <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-    <span class='else else kw'>else</span>
-      <span class='unless unless kw'>unless</span> <span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span> <span class='and and kw'>and</span> <span class='lparen token'>(</span><span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>0</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='integer val'>0</span><span class='integer val'>.0</span><span class='rparen token'>)</span>
-        <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='type identifier id'>type</span> <span class='plus op'>+</span> <span class='string val'>&quot; Mortality: Invalid mortality table format: first row is not 0.0,0.0&quot;</span>
-        <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>
-      <span class='unless unless kw'>unless</span> <span class='mortality identifier id'>mortality</span><span class='lbrack token'>[</span><span class='integer val'>-1</span><span class='rbrack token'>]</span><span class='lbrack token'>[</span><span class='integer val'>1</span><span class='rbrack token'>]</span> <span class='eq op'>==</span> <span class='float val'>1.0</span>
-        <span class='errorString identifier id'>errorString</span> <span class='assign token'>=</span> <span class='type identifier id'>type</span> <span class='plus op'>+</span> <span class='string val'>&quot; Mortality: Invalid mortality table format: last row does not have a q(x) of 1.0&quot;</span>
-        <span class='errors identifier id'>errors</span> <span class='assign token'>=</span> <span class='GenFactor constant id'>GenFactor</span><span class='colon2 op'>::</span><span class='append_error identifier id'>append_error</span><span class='lparen token'>(</span><span class='errors identifier id'>errors</span><span class='comma token'>,</span><span class='errorString identifier id'>errorString</span><span class='rparen token'>)</span>
-      <span class='end end kw'>end</span>        
-    <span class='end end kw'>end</span>
-  <span class='end end kw'>end</span>
-  <span class='errors identifier id'>errors</span>    
-<span class='end end kw'>end</span>
-</pre>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-</div>
-    </div>
-  
-    <div class="method">
-      <div class="method_header">
   <h3>yearly_discount</h3>
 </div><div id="yearly_discount-instance_method" class="section method">
   <div class="details_title">
@@ -2164,7 +2017,7 @@ version 1.0.0
 </div>
     </div>
     <div id="yard_info">
-  Generated on Monday, January 11 2010 at 02:37:11 PM by 
+  Generated on Monday, January 11 2010 at 04:04:07 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>

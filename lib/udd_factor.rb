@@ -177,129 +177,119 @@ include MortalityTable
   #
   # @since version 1.0.0   
   ##
-  #def generate_factor(ages,rates,periods,mortality,spMortality)
-  def generate_factor
-  #def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
-	#                    jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
-	#                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
-	#                    tempPeriod=0.0,rounding=12.0,outputType=0.0,spMortality=nil)
-	  errors = []
-	  immediateCalculation, jointCalculation = 0.0
-
+  def generate_factor()
 	  #set default blank input items
-	  commencementAge = @commencement_age
-	  immediateAge = GenFactor::set_default(@immediate_age,commencementAge)
-	  spAge = GenFactor::set_default(@secondary_age,0.0)
-	  jsType = GenFactor::set_default(@joint_survivor_type,0.0)
-	  jsPct = GenFactor::set_default(@joint_survivor_percent,0.0)
-	  mortality = GenFactor::set_default(@primary_mortality,MortalityTable::PPA2009)
-	  spMortality = GenFactor::set_default(@secondary_mortality,mortality)
-	  intSegmentA = @interest_segment_a
-	  intSegmentB = GenFactor::set_default(@interest_segment_b,intSegmentA)
-	  intSegmentC = GenFactor::set_default(@interest_segment_c,intSegmentA)
-	  certainPeriod = GenFactor::set_default(@certain_period,0.0)
-	  tempPeriod = GenFactor::set_default(@temporary_period,0.0)
-	  rounding = GenFactor::set_default(@rounding,12.0)
-	  outputType = GenFactor::set_default(@output_type,0.0)
+    self.default_values
   
 	  #check to make sure we can do the calculation first
-	  begin 
-	    immediateAge = GenFactor::sanitize_age(Float(immediateAge)) 
-	  rescue
-	    errorString = "Immediate age cannot be converted into a number"
-	    errors = GenFactor::append_error(errors,errorString)
-	  end 
-	  begin
-	    commencementAge = GenFactor::sanitize_age(Float(commencementAge))  
-	  rescue
-	    errorString = "Commencement age cannot be converted into a number"
-	    errors = GenFactor::append_error(errors,errorString)
-	  end
-	  begin
-		  spAge = GenFactor::sanitize_age(Float(spAge))
-		rescue
-		  errorString = "Spousal age cannot be converted into a number"
-		  errors = GenFactor::append_error(errors,errorString)	      
-		end
-		begin
-		  jsType = GenFactor::sanitize_js_type(Float(jsType))
-		rescue
-		  errorString = "JS Type cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)
-		end
-    errors = MortalityTable::validate_mortality(mortality,errors,"Primary")
-    errors = MortalityTable::validate_mortality(spMortality,errors,"Secondary")
-		begin
-		  jsPct = GenFactor::sanitize_js_pct(Float(jsPct))
-		rescue
-		  errorString = "JS percent cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		
-		end
-		begin
-      intSegmentA = GenFactor::sanitize_interest(Float(intSegmentA))		  
-    rescue
-		  errorString = "Interest segment A cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)      
-		end
-		begin
-		  intSegmentB = GenFactor::sanitize_interest(Float(intSegmentB))
-		rescue
-		  errorString = "Interest segment B cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		  		  
-		end
-		begin
-		  intSegmentC = GenFactor::sanitize_interest(Float(intSegmentC))
-		rescue
-		  errorString = "Interest segment C cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		  
-		end
-    begin
-		  certainPeriod = GenFactor::sanitize_age(Float(certainPeriod))
-		rescue
-		  errorString = "Certain period cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		        
-		end
-		begin
-		  tempPeriod = GenFactor::sanitize_age(Float(tempPeriod))
-		rescue
-		  errorString = "Temporary period cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		  		  
-		end
-		begin
-		  rounding = Float(rounding)
-		rescue
-		  errorString = "Rounding cannot be converted into a number"		
-		  errors = GenFactor::append_error(errors,errorString)		  
-		end
-  
-	  if errors.empty?
-		  #now check for logical errors
-		  if (immediateAge < commencementAge) && (tempPeriod > 0.0)
-			  errorString = "Error: Deferred Calculation with a Temporary Period"
-			  errors = GenFactor::append_error(errors,errorString)	
-		  end
-	  
-		  if (immediateAge > commencementAge)
-			  errorString = "Error: Commencement age must be greater than or equal to immediate age"
-        errors = GenFactor::append_error(errors,errorString)				  
-		  end
-	  
-	  end #if errors.empty?
-  
-	  if errors.empty?
-		  if 0 == outputType
-			  calculate_present_value([immediateAge,commencementAge,spAge,jsType,jsPct],
-											          [intSegmentA,intSegmentB,intSegmentC],
-											          [certainPeriod,tempPeriod,rounding],
-			                          mortality,spMortality)
+    self.validation
+  	#now check for logical errors
+  	self.validate_logic_errors
+  	
+	  if @errors.empty?
+		  if 0 == @output_type
+			  calculate_present_value([@immediate_age,@commencement_age,@secondary_age,@joint_survivor_type,@joint_survivor_percent],
+											          [@interest_segment_a,@interest_segment_b,@interest_segment_c],
+											          [@certain_period,@temporary_period,@rounding],
+			                          @primary_mortality,@secondary_mortality)
 		  else
 			  true
 		  end #if outputType is 0
 	  
 	  else #errors is not empty
-      errors
+      @errors
 	  end #if errors.empty?
   end
 
-
+  def validate_single_field(age,errorMessage,radix)
+    begin 
+      case radix
+        when 1.0
+	        GenFactor::sanitize_age(Float(age)) 
+	      when 2.0
+	        GenFactor::sanitize_interest(Float(age))
+	      when 3.0
+	        GenFactor::sanitize_js_type(Float(age))
+        when 4.0
+          jsPct = GenFactor::sanitize_js_pct(Float(age))
+        when 5.0
+          Float(age)
+      end    
+	  rescue
+      self.append_error(errorMessage)
+	  end
+  end
+  
+  def validate_mortality(mortality,type)  
+		unless mortality.is_a? Array
+		  errorString = type + " Mortality: Mortality Table must be an array"
+		  self.append_error(errorString)
+		else
+		  cErrorCount = 0.0
+		  mortality.each do |ii|
+		    begin
+		      tempy = ii
+		      tempo = Float(tempy[0])
+		      tempsan = Float(tempy[1])
+		    rescue
+	          cErrorCount += 1.0
+		    end
+	    end
+	    if cErrorCount > 0.0
+	      errorString = type + " Mortality: Invalid mortality table format: cannot convert all elements to numbers"
+        self.append_error(errorString)
+      else
+        unless (mortality[0][0] == 0.0) and (mortality[0][1] == 0.0)
+          errorString = type + " Mortality: Invalid mortality table format: first row is not 0.0,0.0"
+          self.append_error(errorString)
+        end
+        unless mortality[-1][1] == 1.0
+          errorString = type + " Mortality: Invalid mortality table format: last row does not have a q(x) of 1.0"
+         self.append_error(errorString)
+        end        
+      end
+		end   
+  end  
+  
+  def default_values()
+	  @immediate_age = GenFactor::set_default(@immediate_age,@commencement_age)
+	  @secondary_age = GenFactor::set_default(@secondary_age,0.0)
+	  @joint_survivor_type = GenFactor::set_default(@joint_survivor_type,0.0)
+	  @joint_survivor_percent = GenFactor::set_default(@joint_survivor_percent,0.0)
+	  @primary_mortality = GenFactor::set_default(@primary_mortality,MortalityTable::PPA2009)
+	  @secondary_mortality = GenFactor::set_default(@secondary_mortality,@primary_mortality)
+	  @interest_segment_b = GenFactor::set_default(@interest_segment_b,@interest_segment_a)
+	  @interest_segment_c = GenFactor::set_default(@interest_segment_c,@interest_segment_a)
+	  @certain_period = GenFactor::set_default(@certain_period,0.0)
+	  @temporary_period = GenFactor::set_default(@temporary_period,0.0)
+	  @rounding = GenFactor::set_default(@rounding,12.0)
+	  @output_type = GenFactor::set_default(@output_type,0.0)
+  end
+  
+  def validation()
+	  @immediate_age = validate_single_field(@immediate_age,"Immediate age cannot be converted into a number",1.0)
+	  @commencement_age = validate_single_field(@commencement_age,"Commencement age cannot be converted into a number",1.0)
+	  @secondary_age = validate_single_field(@secondary_age,"Spousal age cannot be converted into a number",1.0)
+	  @joint_survivor_type = validate_single_field(@joint_survivor_type,"JS Type cannot be converted into a number",3.0)
+    @joint_survivor_percent = validate_single_field(@joint_survivor_percent,"JS percent cannot be converted into a number",4.0)
+    validate_mortality(@primary_mortality,"Primary")
+    validate_mortality(@secondary_mortality,"Secondary")  
+		@interest_segment_a = validate_single_field(@interest_segment_a,"Interest segment A cannot be converted into a number",2.0)
+    @interest_segment_b = validate_single_field(@interest_segment_b,"Interest segment B cannot be converted into a number",2.0)
+    @interest_segment_c = validate_single_field(@interest_segment_c,"Interest segment C cannot be converted into a number",2.0)    
+    @certain_period = validate_single_field(@certain_period,"Certain period cannot be converted into a number",1.0)
+    @temporary_period = validate_single_field(@temporary_period,"Temporary period cannot be converted into a number",1.0)
+    @rounding = validate_single_field(@rounding,"Rounding cannot be converted into a number",5.0)  
+  end
+  
+  def validate_logic_errors
+    if @errors.empty?
+		  if (@immediate_age < @commencement_age) && (@temporary_period > 0.0)
+			  self.append_error("Error: Deferred Calculation with a Temporary Period")	
+		  end	  
+		  if (@immediate_age > @commencement_age)
+        self.append_error("Error: Commencement age must be greater than or equal to immediate age")				  
+		  end	  
+	  end #if errors.empty?
+	end
 end
