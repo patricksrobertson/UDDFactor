@@ -26,11 +26,25 @@ EXAMPLES
 
 This creates a 50% Joint and Survivor Annuity using the PPA2010 mortality table with three segment rates, and no certain/deferred periords and rounding to 6 decimal places.
 
-	UDDFactor::generate_factor(65.0,65.0,61.0,1.0,50,MortalityTable::PPA2010,5.44,5.24,5.69,0,0,6.0)
+	joint_survivor_factor = ActuarialFactor.new
+	joint_survivor_factor.secondary_age = 61.0
+	joint_survivor_factor.joint_survivor_type = 1.0
+	joint_survivor_factor.joint_survivor_percent = 50.0
+	joint_survivor_factor.primary_mortality = MortalityTable::PPA2010
+	joint_survivor_factor.interest_segment_a = 5.44
+	joint_survivor_factor.interest_segment_b = 5.24
+	joint_survivor_factor.interest_segment_c = 5.69
+	joint_survivor_factor.rounding = 6.0
+	joint_survivor_factor.generate_factor
 
 This creates a SLA factor with a 5 year certain period and 8 digit rounding.  This uses 5.44% for all three interest segments.
-	
-	UDDFactor::generate_factor(,65.0,,,MortalityTable::PPA2013,.0544,,,5,,8.0)
+	sla_factor.primary_mortality = MortalityTable::PPA2013
+	sla_factor.interest_segment_a = .0544
+	sla_factor.interest_segment_b = nil
+	sla_factor.interest_segment_c = nil
+	sla_factor.certain_period = 5.0
+	sla_factor.rounding = 8.0
+	sla_factor.generate_factor
 	
 COPYRIGHT
 ---------

@@ -12,7 +12,7 @@
   <body>
     <div id="content">
       <div class="section docstring readme">
-        <h1>UDDFactor Release 1.2.0 (January 10th 2010)</h1>
+        <h1>UDDFactor Release 2.0.0 (January 11th 2010)</h1>
 
 <p><strong>Homepage</strong>: <a href="http://github.com/jbcplatter">http://github.com/jbplatter</a>
 <strong>Author</strong>: <a href="mailto:patricksrobertson@gmail.com">Patrick Robertson</a>
@@ -37,12 +37,27 @@
 
 <p>This creates a 50% Joint and Survivor Annuity using the PPA2010 mortality table with three segment rates, and no certain/deferred periords and rounding to 6 decimal places.</p>
 
-<pre class="code"><span class='UDDFactor constant id'>UDDFactor</span><span class='colon2 op'>::</span><span class='generate_factor identifier id'>generate_factor</span><span class='lparen token'>(</span><span class='float val'>65.0</span><span class='comma token'>,</span><span class='float val'>65.0</span><span class='comma token'>,</span><span class='float val'>61.0</span><span class='comma token'>,</span><span class='float val'>1.0</span><span class='comma token'>,</span><span class='integer val'>50</span><span class='comma token'>,</span><span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2010 constant id'>PPA2010</span><span class='comma token'>,</span><span class='float val'>5.44</span><span class='comma token'>,</span><span class='float val'>5.24</span><span class='comma token'>,</span><span class='float val'>5.69</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='integer val'>0</span><span class='comma token'>,</span><span class='float val'>6.0</span><span class='rparen token'>)</span>
+<pre class="code"><span class='joint_survivor_factor identifier id'>joint_survivor_factor</span> <span class='assign token'>=</span> <span class='ActuarialFactor constant id'>ActuarialFactor</span><span class='dot token'>.</span><span class='new identifier id'>new</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='secondary_age identifier id'>secondary_age</span> <span class='assign token'>=</span> <span class='float val'>61.0</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='joint_survivor_type identifier id'>joint_survivor_type</span> <span class='assign token'>=</span> <span class='float val'>1.0</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='joint_survivor_percent identifier id'>joint_survivor_percent</span> <span class='assign token'>=</span> <span class='float val'>50.0</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='primary_mortality identifier id'>primary_mortality</span> <span class='assign token'>=</span> <span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2010 constant id'>PPA2010</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='interest_segment_a identifier id'>interest_segment_a</span> <span class='assign token'>=</span> <span class='float val'>5.44</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='interest_segment_b identifier id'>interest_segment_b</span> <span class='assign token'>=</span> <span class='float val'>5.24</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='interest_segment_c identifier id'>interest_segment_c</span> <span class='assign token'>=</span> <span class='float val'>5.69</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='rounding identifier id'>rounding</span> <span class='assign token'>=</span> <span class='float val'>6.0</span>
+<span class='joint_survivor_factor identifier id'>joint_survivor_factor</span><span class='dot token'>.</span><span class='generate_factor identifier id'>generate_factor</span>
 </pre>
 
 <p>This creates a SLA factor with a 5 year certain period and 8 digit rounding.  This uses 5.44% for all three interest segments.</p>
 
-<pre class="code"><span class='UDDFactor constant id'>UDDFactor</span><span class='colon2 op'>::</span><span class='generate_factor identifier id'>generate_factor</span><span class='lparen token'>(</span><span class='comma token'>,</span><span class='float val'>65.0</span><span class='comma token'>,</span><span class='comma token'>,</span><span class='comma token'>,</span><span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2013 constant id'>PPA2013</span><span class='comma token'>,</span><span class='integer val'>.0544</span><span class='comma token'>,</span><span class='comma token'>,</span><span class='comma token'>,</span><span class='integer val'>5</span><span class='comma token'>,</span><span class='comma token'>,</span><span class='float val'>8.0</span><span class='rparen token'>)</span>
+<pre class="code"><span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='primary_mortality identifier id'>primary_mortality</span> <span class='assign token'>=</span> <span class='MortalityTable constant id'>MortalityTable</span><span class='colon2 op'>::</span><span class='PPA2013 constant id'>PPA2013</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='interest_segment_a identifier id'>interest_segment_a</span> <span class='assign token'>=</span> <span class='integer val'>.0544</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='interest_segment_b identifier id'>interest_segment_b</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='interest_segment_c identifier id'>interest_segment_c</span> <span class='assign token'>=</span> <span class='nil nil kw'>nil</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='certain_period identifier id'>certain_period</span> <span class='assign token'>=</span> <span class='float val'>5.0</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='rounding identifier id'>rounding</span> <span class='assign token'>=</span> <span class='float val'>8.0</span>
+<span class='sla_factor identifier id'>sla_factor</span><span class='dot token'>.</span><span class='generate_factor identifier id'>generate_factor</span>
 </pre>
 
 <h2>COPYRIGHT</h2>
@@ -52,7 +67,7 @@ license. Please see the <a title="LICENSE" href="LICENSE.html">LICENSE</a> for m
       </div>
     </div>
     <div id="yard_info">
-  Generated on Monday, January 11 2010 at 04:39:05 PM by 
+  Generated on Monday, January 11 2010 at 04:53:17 PM by 
   <abbr class="yard" title="Yay! A Ruby Documentation Tool"><a href="http://yard.soen.ca">YARD</a></abbr> 
   0.2.3.5 (ruby-1.8.6).
 </div>
