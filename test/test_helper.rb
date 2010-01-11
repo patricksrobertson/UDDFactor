@@ -3,6 +3,7 @@ require "mortality_table"
 require "gen_factor"
 require "annuity_certain"
 require "udd_factor"
+require 'actuarial_factor.rb'
 #include UDDFactor
 #require 'active_support/test_case'
 $:.unshift(File.dirname(__FILE__) + '/../lib')

@@ -40,45 +40,45 @@ include MortalityTable
   # @since version 1.0.0
   ##
   def calculate_present_value(ages,rates,periods,mortality,spMortality)
-    
+  
     #first load the age parameters in
     immAge = ages[0]
     defAge = ages[1]
     spouseAge = ages[2]
     js_type = ages[3]
     js_pct = ages[4]
-    
+  
     #now the interest rates
     seg1 = rates[0]
     seg2 = rates[1]
     seg3 = rates[2]
-    
+  
     #finally the misc functions
     certain = periods[0]
     temp = periods[1]
     rounding = periods[2]
-                                
+                              
     returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
     age = immAge
     dAge = defAge
     lxZero = lxZeroSpouse = LX_ZERO
     sAge = spouseAge
     jointCalc = js_type
- 
+
     mortalityDiscount = mortalityDiscountSpouse = mortalityDiscountJoint = 1.0
- 
+
     lX = lxZero
     lXSpouse = lxZeroSpouse
- 
+
     dX = calculate_dx(0.0,lX,age.truncate,mortality)
     dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,spMortality)
- 
+
     lX = calculate_initial_lx(lX,dX,age)
     lxZero = lX
- 
+
     lXSpouse = calculate_initial_lx(lXSpouse,dXSpouse,sAge)
     lxZeroSpouse = lXSpouse
- 
+
     if 0.0 == lX
       retVal = 0.0 #everyone is already dead yo.
     else
@@ -95,19 +95,19 @@ include MortalityTable
         else
           interestRate = seg3
         end
-        
+      
         if age < dAge
           payment = 0.0
         else
           payment = (1.0/12.0)
         end
-        
+      
         if temp > 0.0
           if age >= (temp + dAge)
             payment = 0.0
           end
         end
-        
+      
         singlePV += GenFactor::unit_payment(mortalityDiscount,interestRate,time,payment)
         if jointCalc > 0.0
           sAge = add_month(sAge)
@@ -118,13 +118,13 @@ include MortalityTable
             jointCalculationValid = false
           end
         end
-        
+      
         time += 1.0
         age = add_month(age)
- 
+
         lX = lX - dX
         lXSpouse = lXSpouse - dXSpouse
- 
+
         dX = calculate_dx(dX,lX,age,mortality)
         dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge,mortality)
         if ((nil != certain) and age >= (dAge + certain) || age <= dAge) or (nil == certain)
@@ -132,16 +132,16 @@ include MortalityTable
             mortalityDiscountSpouse = GenFactor::calculate_discount(lXSpouse,lxZeroSpouse)
             mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
         end
-        
+      
       end #end while 0.0 < lX
     end #end if lx = 0.0
-    
+  
     returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
     round_factor(returnValue,rounding)
   end 
   module_function :calculate_present_value
 
-  
+
   ##
   # Validates input parameters then generates a Present Value Factor.
   #
@@ -177,30 +177,31 @@ include MortalityTable
   #
   # @since version 1.0.0   
   ##
-  def generate_factor(ages,rates,periods,mortality,spMortality)
+  #def generate_factor(ages,rates,periods,mortality,spMortality)
+  def generate_factor
   #def generate_factor(immediateAge=0.0,commencementAge=65.0,spAge=0.0,
 	#                    jsType=0.0,jsPct=0.0,mortality=MortalityTable::PPA2009,
 	#                    intSegmentA=5.0,intSegmentB=0.0,intSegmentC=0.0,certainPeriod=0.0,
 	#                    tempPeriod=0.0,rounding=12.0,outputType=0.0,spMortality=nil)
 	  errors = []
 	  immediateCalculation, jointCalculation = 0.0
-  
+
 	  #set default blank input items
-	  commencementAge = ages[1]
-	  immediateAge = GenFactor::set_default(ages[0],commencementAge)
-	  spAge = GenFactor::set_default(ages[2],0.0)
-	  jsType = GenFactor::set_default(ages[3],0.0)
-	  jsPct = GenFactor::set_default(ages[4],0.0)
-	  mortality = GenFactor::set_default(mortality,MortalityTable::PPA2009)
-	  spMortality = GenFactor::set_default(spMortality,mortality)
-	  intSegmentA = rates[0]
-	  intSegmentB = GenFactor::set_default(rates[1],intSegmentA)
-	  intSegmentC = GenFactor::set_default(rates[2],intSegmentA)
-	  certainPeriod = GenFactor::set_default(periods[0],0.0)
-	  tempPeriod = GenFactor::set_default(periods[1],0.0)
-	  rounding = GenFactor::set_default(periods[2],12.0)
-	  outputType = GenFactor::set_default(periods[3],0.0)
-	  
+	  commencementAge = @commencement_age
+	  immediateAge = GenFactor::set_default(@immediate_age,commencementAge)
+	  spAge = GenFactor::set_default(@secondary_age,0.0)
+	  jsType = GenFactor::set_default(@joint_survivor_type,0.0)
+	  jsPct = GenFactor::set_default(@joint_survivor_percent,0.0)
+	  mortality = GenFactor::set_default(@primary_mortality,MortalityTable::PPA2009)
+	  spMortality = GenFactor::set_default(@secondary_mortality,mortality)
+	  intSegmentA = @interest_segment_a
+	  intSegmentB = GenFactor::set_default(@interest_segment_b,intSegmentA)
+	  intSegmentC = GenFactor::set_default(@interest_segment_c,intSegmentA)
+	  certainPeriod = GenFactor::set_default(@certain_period,0.0)
+	  tempPeriod = GenFactor::set_default(@temporary_period,0.0)
+	  rounding = GenFactor::set_default(@rounding,12.0)
+	  outputType = GenFactor::set_default(@output_type,0.0)
+  
 	  #check to make sure we can do the calculation first
 	  begin 
 	    immediateAge = GenFactor::sanitize_age(Float(immediateAge)) 
@@ -270,21 +271,21 @@ include MortalityTable
 		  errorString = "Rounding cannot be converted into a number"		
 		  errors = GenFactor::append_error(errors,errorString)		  
 		end
-	  
+  
 	  if errors.empty?
 		  #now check for logical errors
 		  if (immediateAge < commencementAge) && (tempPeriod > 0.0)
 			  errorString = "Error: Deferred Calculation with a Temporary Period"
 			  errors = GenFactor::append_error(errors,errorString)	
 		  end
-		  
+	  
 		  if (immediateAge > commencementAge)
 			  errorString = "Error: Commencement age must be greater than or equal to immediate age"
         errors = GenFactor::append_error(errors,errorString)				  
 		  end
-		  
-	  end #if errors.empty?
 	  
+	  end #if errors.empty?
+  
 	  if errors.empty?
 		  if 0 == outputType
 			  calculate_present_value([immediateAge,commencementAge,spAge,jsType,jsPct],
@@ -294,11 +295,11 @@ include MortalityTable
 		  else
 			  true
 		  end #if outputType is 0
-		  
+	  
 	  else #errors is not empty
       errors
 	  end #if errors.empty?
   end
-  module_function :generate_factor
-  
+
+
 end
