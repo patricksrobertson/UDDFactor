@@ -14,64 +14,27 @@ include MortalityTable
   # Calculates the present value of each unit payment and sums them to create a factor.
   # This method lacks the validation of generate_factor.  {#generate_factor} should be called instead.
   #
-  # @param immAge - Immediate Age: The age to start deferral calculations from.
-  # @param defAge - Deferred Age: The commencment or deferred age.
-  # @param spouseAge - Spousal Age: The spousal commencement age.
-  # @param [0.0,1.0,2.0,3.0,4.0] js_type - Joint and Survivor Type: See {#calculate_joint_factor} for valid values
-  # @param [0.0-1.0] js_pct - Joint and Survivor Percent: Value between 0.0 and 1.0 that represents the amount
-  #                         a survivor will receive.
-  # @param [Array] mortality - Mortality table for q(x) lookup
-  # @param [0.0-1.0] seg1 - Segment 1: The first segment interest rate.
-  # @param [0.0-1.0] seg2 - Segment 2: The second segment interest rate.
-  # @param [0.0-1.0] seg3 - Segment 3: The third segment interest rate.  
-  # @param certain - Certain Period: The number of years that the payment is guaranteed.
-  # @param temp - Temporary Period: The number of years years after the commencement age 
-  #                       the payments will be calculated.
-  # @param rounding - Rounding: The number of significant figures to round.
-  # @param [Array] spMortality - Mortality table for the q(x) lookup for the secondary beneficiary.
-  #
   # @return [float] Present Value Factor
-  #
-  # @example A 47% percent joint and survivor factor.
-  # "calculate_present_value(65.0,65.0,61.0,2.0,0.47,0.0544,0.0544,0.0544,0.0,0.0,6.0)"
   #
   # @todo protect this method
   #
   # @since version 1.0.0
   ##
-  def calculate_present_value(ages,rates,periods,mortality,spMortality)
-  
-    #first load the age parameters in
-    immAge = ages[0]
-    defAge = ages[1]
-    spouseAge = ages[2]
-    js_type = ages[3]
-    js_pct = ages[4]
-  
-    #now the interest rates
-    seg1 = rates[0]
-    seg2 = rates[1]
-    seg3 = rates[2]
-  
-    #finally the misc functions
-    certain = periods[0]
-    temp = periods[1]
-    rounding = periods[2]
-                              
+  def calculate_present_value()
     returnValue = singlePV = spousePV = jointPV = time = payment = 0.0
-    age = immAge
-    dAge = defAge
+    age = @immediate_age
+    dAge = @commencement_age
     lxZero = lxZeroSpouse = LX_ZERO
-    sAge = spouseAge
-    jointCalc = js_type
+    sAge = @secondary_age
+    jointCalc = @joint_survivor_type
 
     mortalityDiscount = mortalityDiscountSpouse = mortalityDiscountJoint = 1.0
 
     lX = lxZero
     lXSpouse = lxZeroSpouse
 
-    dX = calculate_dx(0.0,lX,age.truncate,mortality)
-    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,spMortality)
+    dX = calculate_dx(0.0,lX,age.truncate,@primary_mortality)
+    dXSpouse = calculate_dx(0.0,lXSpouse,sAge.truncate,@secondary_mortality)
 
     lX = calculate_initial_lx(lX,dX,age)
     lxZero = lX
@@ -89,11 +52,11 @@ include MortalityTable
       while (lX > 0.0) or (jointCalculationValid)
         monthlyTime = time / 12.0
         if SEGMENT_TWO > monthlyTime
-          interestRate = seg1
+          interestRate = @interest_segment_a
         elsif SEGMENT_THREE > monthlyTime
-          interestRate = seg2
+          interestRate = @interest_segment_b
         else
-          interestRate = seg3
+          interestRate = @interest_segment_c
         end
       
         if age < dAge
@@ -102,8 +65,8 @@ include MortalityTable
           payment = (1.0/12.0)
         end
       
-        if temp > 0.0
-          if age >= (temp + dAge)
+        if @temporary_period > 0.0
+          if age >= (@temporary_period + dAge)
             payment = 0.0
           end
         end
@@ -125,9 +88,9 @@ include MortalityTable
         lX = lX - dX
         lXSpouse = lXSpouse - dXSpouse
 
-        dX = calculate_dx(dX,lX,age,mortality)
-        dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge,mortality)
-        if ((nil != certain) and age >= (dAge + certain) || age <= dAge) or (nil == certain)
+        dX = calculate_dx(dX,lX,age,@primary_mortality)
+        dXSpouse = calculate_dx(dXSpouse,lXSpouse,sAge,@secondary_mortality)
+        if ((nil != @certain_period) and age >= (dAge + @certain_period) || age <= dAge) or (nil == @certain_period)
             mortalityDiscount = GenFactor::calculate_discount(lX, lxZero)
             mortalityDiscountSpouse = GenFactor::calculate_discount(lXSpouse,lxZeroSpouse)
             mortalityDiscountJoint = mortalityDiscount * mortalityDiscountSpouse
@@ -136,35 +99,14 @@ include MortalityTable
       end #end while 0.0 < lX
     end #end if lx = 0.0
   
-    returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,js_type,js_pct)
-    round_factor(returnValue,rounding)
+    returnValue = calculate_joint_factor(singlePV,spousePV,jointPV,@joint_survivor_type,@joint_survivor_percent)
+    round_factor(returnValue,@rounding)
   end 
   module_function :calculate_present_value
 
 
   ##
   # Validates input parameters then generates a Present Value Factor.
-  #
-  # @example Single Life Annuity Factor
-  # "generate_factor(,65.0,,,,MortalityTable::PPA2010,5.44,,,,,)"
-  #
-  # @param [nil,float] immediateAge - Beginning age for deferred calculations.  Defaults to commencementAge.
-  # @param [float] commencementAge - Age that payment begins.  This parameter is required.
-  # @param [nil,float] spAge - Spouse commencement age.
-  # @param [nil,float] jsType - Joint and Survivor factor type.  Defaults to 0.0
-  # @param [nil,float] jsPct - Joint and Survivor percentage.  Defaults to 0.0.
-  # @param [Array] mortality - Mortality Table used to fetch q(x) from.  Defaults to {MortalityTable::PPA2009}
-  # @param [float] intSegmentA - First interest rate segment.  This parameter is required.
-  # @param [nil,float] intSegmentB - Second interest rate segment.  Defaults to intSegmentA.
-  # @param [nil,float] intSegmentC - Third interest rate segment.  Defaults to intSegmentA.  
-  # @param [nil,float] certainPeriod - Guaranteed payment period. Defaults to 0.0.  
-  # @param [nil,float] tempPeriod - Temporary factor period.  Defaults to 0.0.
-  # @param [nil,float] rounding - Digits to round to.  Defaults to 12.0.
-  # @param [nil,float] outputType - If set to 0, runs a factor as normal.  Anything else is validation mode.
-  #                               Validation mode runs the checks, and outputs the error message without
-  #                               running the {#calculate_present_value} method.
-  # @param [Array] spMortality - Mortality table to fetch q(x) from for the secondary beneficiary.  Defaults 
-  #                             to the primary mortality table.
   #
   # @raise [InvalidFloat] if any input parameter cannot be converted to a float, it will produce an error.
   # @raise [DefTemp] if immediateAge < commencementAge and tempPeriod > 0, will throw an error.
@@ -188,10 +130,7 @@ include MortalityTable
   	
 	  if @errors.empty?
 		  if 0 == @output_type
-			  calculate_present_value([@immediate_age,@commencement_age,@secondary_age,@joint_survivor_type,@joint_survivor_percent],
-											          [@interest_segment_a,@interest_segment_b,@interest_segment_c],
-											          [@certain_period,@temporary_period,@rounding],
-			                          @primary_mortality,@secondary_mortality)
+			  calculate_present_value
 		  else
 			  true
 		  end #if outputType is 0
@@ -200,7 +139,16 @@ include MortalityTable
       @errors
 	  end #if errors.empty?
   end
-
+  
+  ##
+  # Validates a single field and adds to the error messages if it is invalid.
+  # 
+  # @param [float] age - The value to be validated
+  # @param [String] errorMessage - Error messages to be added if an error is raised
+  # @param [float] radix - 1.0 for ages, 2.0 for interests, 3.0 for js_type, 4.0 for js_pct, 5 for rounding validation
+  #
+  # @since 2.0.0
+  ## 
   def validate_single_field(age,errorMessage,radix)
     begin 
       case radix
@@ -220,6 +168,15 @@ include MortalityTable
 	  end
   end
   
+  ##
+  # Validates the mortality tables for potential errors
+  #
+  # @raise [Non-Array] - If the Mortality table isn't an array
+  # @raise [InvalidFloat] - If the table has non-numeric fields
+  # @raise [InvalidEnd] - If the last row does not have a q(x) = 1.0
+  #
+  # @since version 2.0.0
+  ##
   def validate_mortality(mortality,type)  
 		unless mortality.is_a? Array
 		  errorString = type + " Mortality: Mortality Table must be an array"
@@ -251,6 +208,11 @@ include MortalityTable
 		end   
   end  
   
+  ##
+  # Sets all the instance variables to default values
+  #
+  # @since version 2.0.0
+  ##
   def default_values()
 	  @immediate_age = GenFactor::set_default(@immediate_age,@commencement_age)
 	  @secondary_age = GenFactor::set_default(@secondary_age,0.0)
@@ -266,6 +228,11 @@ include MortalityTable
 	  @output_type = GenFactor::set_default(@output_type,0.0)
   end
   
+  ##
+  # Validates all the instance variables to ensure a calculation can be run
+  #
+  # @since version 2.0.0
+  ##
   def validation()
 	  @immediate_age = validate_single_field(@immediate_age,"Immediate age cannot be converted into a number",1.0)
 	  @commencement_age = validate_single_field(@commencement_age,"Commencement age cannot be converted into a number",1.0)
@@ -282,6 +249,11 @@ include MortalityTable
     @rounding = validate_single_field(@rounding,"Rounding cannot be converted into a number",5.0)  
   end
   
+  ##
+  # Validates the logic errors that can occur and a calculation shouldn't take place.
+  #
+  # @since version 2.0.0
+  ##
   def validate_logic_errors
     if @errors.empty?
 		  if (@immediate_age < @commencement_age) && (@temporary_period > 0.0)
