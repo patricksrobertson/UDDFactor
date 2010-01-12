@@ -160,8 +160,8 @@ include MortalityTable
 	        GenFactor::sanitize_js_type(Float(age))
         when 4.0
           jsPct = GenFactor::sanitize_js_pct(Float(age))
-        when 5.0
-          Float(age)
+       else
+        Float(age)
       end    
 	  rescue
       self.append_error(errorMessage)
